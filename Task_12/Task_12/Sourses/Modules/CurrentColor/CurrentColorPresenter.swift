@@ -15,12 +15,11 @@ class CurrentColorPresenter {
     var colorServise: ColorService?
     
     weak var output: CurrentColorModuleOutput?
-//    var newWallet: Wallet?
-//
-//    var walletService: WalletService?
-//    var wallet: Wallet?
-    
 
+    var color: String
+    init(color: String) {
+        self.color = color
+    }
 }
 
 extension CurrentColorPresenter: CurrentColorViewOutput {
@@ -53,5 +52,9 @@ extension CurrentColorPresenter: CurrentColorViewOutput {
     func modelOfIndex(index: Int) -> Color {
         let currentColor = models[index]
         return currentColor
+    }
+    
+    func currentColor() -> String {
+        return color
     }
 }

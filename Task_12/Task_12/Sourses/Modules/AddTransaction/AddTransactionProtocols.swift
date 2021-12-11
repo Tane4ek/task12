@@ -39,6 +39,8 @@ protocol AddTransactionViewOutput: AnyObject {
     
     func buttonBackTapped(wallet: Wallet)
     
+    func buttonSaveTapped(wallet: Wallet)
+    
     func didSelectRowAt()
     
     func currentLabel() -> String

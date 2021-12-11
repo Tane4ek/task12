@@ -8,27 +8,29 @@
 import UIKit
 
 class TextViewCollectionViewCell: UICollectionViewCell {
-    static let reusedId = "TextViewCollectionViewCell"
     
-    enum Paddings {
+    private enum Paddings {
         static let horizontalInset: CGFloat = 17
         
-        enum textView {
+        enum TextView {
             static let horizontalInset: CGFloat = 20
             static let topInset: CGFloat = 62
             static let bottomInset: CGFloat = 20
         }
         
-        enum buttonSave {
+        enum ButtonSave {
             static let inset: CGFloat = 20
             static let width: CGFloat = 70
         }
     }
     
-    var containerView = UIView(frame: .zero)
+    static let reusedId = "TextViewCollectionViewCell"
+    
+    private var containerView = UIView(frame: .zero)
     var textView = UITextView(frame: .zero)
     var delegate: TextInputCollectionViewCellDelegate?
     var textViewIndex: Int?
+    var buttonSave = UIButton(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,15 +38,15 @@ class TextViewCollectionViewCell: UICollectionViewCell {
         setupUICell()
     }
     
-    func setupUICell() {
+    private func setupUICell() {
 
         setupContainerView()
         setuptextView()
-//        setupButtonSave()
+        setupButtonSave()
         setupLayout()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.layer.cornerRadius = 20
         containerView.layer.borderWidth = 1.5
         containerView.layer.borderColor = UIColor.white.cgColor
@@ -53,7 +55,7 @@ class TextViewCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(containerView)
     }
     
-    func setuptextView() {
+    private func setuptextView() {
         textView.text = "Start here..."
         textView.textColor = UIColor.black
         textView.textAlignment = .left
@@ -68,17 +70,32 @@ class TextViewCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(textView)
     }
     
-    func setupLayout() {
+    private func setupButtonSave() {
+        buttonSave.setTitle("Save", for: .normal)
+        buttonSave.layer.cornerRadius = 10
+        buttonSave.layer.borderWidth = 1.5
+        buttonSave.layer.borderColor = UIColor(named: "Green Blue Crayola")?.cgColor
+        buttonSave.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 24)
+        buttonSave.setTitleColor(UIColor(named: "Green Blue Crayola"), for: .normal)
+        buttonSave.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(buttonSave)
+    }
+    
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
             containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Paddings.horizontalInset),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            textView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: Paddings.textView.topInset),
-            textView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: Paddings.textView.horizontalInset),
-            textView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Paddings.textView.horizontalInset),
-            textView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -Paddings.textView.bottomInset),
+            buttonSave.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            buttonSave.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -Paddings.TextView.bottomInset),
+            buttonSave.widthAnchor.constraint(equalToConstant: Paddings.ButtonSave.width),
+            
+            textView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: Paddings.TextView.topInset),
+            textView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: Paddings.TextView.horizontalInset),
+            textView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Paddings.TextView.horizontalInset),
+            textView.bottomAnchor.constraint(equalTo: buttonSave.topAnchor, constant: -Paddings.TextView.bottomInset),
             
         ])
     }

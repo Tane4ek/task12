@@ -11,15 +11,9 @@ protocol WalletService {
     
     func wallets() -> [Wallet]
     
-    func addNewWallet(wallet: Wallet)
+    func updateWalletIfCan(wallet: Wallet) -> Bool
     
     func updateWalletBalance(walletID: UUID, balance: Double)
-    
-    func updadeWalletName(walletID: UUID, name: String)
-    
-    func updateWalletCurrency(walletID: UUID, currentCode: String)
-    
-    func updateWalletColor(walletID: UUID, colorName: String)
-    
+  
     func deleteWallet(walletID: UUID)
 }

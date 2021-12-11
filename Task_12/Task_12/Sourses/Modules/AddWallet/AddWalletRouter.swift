@@ -25,19 +25,15 @@ class AddWalletRouter {
         view?.navigationController?.popViewController(animated: true)
     }
     
-    func showCurrencyModule(output: CurrenciesListModuleOutput) {
+    func showCurrencyModule(output: CurrenciesListModuleOutput, color: String) {
         let configurator = CurrenciesListModuleConfigurator(serviceContainer: serviceContainer)
-        let currenciesListViewController = configurator.configure(output: output)
-//        currenciesListViewController.modalPresentationStyle = .fullScreen
-//        view?.present(currenciesListViewController, animated: true, completion: nil)
+        let currenciesListViewController = configurator.configure(output: output, color: color)
         view?.navigationController?.pushViewController(currenciesListViewController, animated: true)
     }
     
-    func showCurrentColorModule(output: CurrentColorModuleOutput) {
+    func showCurrentColorModule(output: CurrentColorModuleOutput, color: String) {
         let configurator = CurrentColorModuleConfigurator(serviceContainer: serviceContainer)
-        let currentColorViewController = configurator.configure(output: output)
-//        currenciesListViewController.modalPresentationStyle = .fullScreen
-//        view?.present(currenciesListViewController, animated: true, completion: nil)
+        let currentColorViewController = configurator.configure(output: output, color: color)
         view?.navigationController?.pushViewController(currentColorViewController, animated: true)
     }
     

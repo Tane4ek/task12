@@ -9,9 +9,7 @@ import UIKit
 
 class ColorThemeCollectionViewCell: UICollectionViewCell {
     
-    static let reusedId = "ColorThemeCollectionViewCell"
-    
-    enum Paddings {
+    private enum Paddings {
         static let horizontalInset: CGFloat = 17
         
         enum ImageContinerView {
@@ -31,10 +29,12 @@ class ColorThemeCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var containerView = UIView(frame: .zero)
-    var imageContinerView = UIView(frame: .zero)
-    var colorView = UIImageView(frame: .zero)
-    var chevron = UIImageView(frame: .zero)
+    static let reusedId = "ColorThemeCollectionViewCell"
+    
+    private var containerView = UIView(frame: .zero)
+    private var imageContinerView = UIView(frame: .zero)
+    private var colorView = UIImageView(frame: .zero)
+    private var chevron = UIImageView(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,7 +42,7 @@ class ColorThemeCollectionViewCell: UICollectionViewCell {
         setupUICell()
     }
     
-    func setupUICell() {
+    private func setupUICell() {
         setupContainerView()
         setupimageContinerView()
         setupColorView()
@@ -50,7 +50,7 @@ class ColorThemeCollectionViewCell: UICollectionViewCell {
         setupLayout()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.layer.cornerRadius = 20
         containerView.layer.borderWidth = 1.5
         containerView.layer.borderColor = UIColor.white.cgColor
@@ -60,7 +60,7 @@ class ColorThemeCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(containerView)
     }
     
-    func setupimageContinerView() {
+    private func setupimageContinerView() {
         imageContinerView.layer.cornerRadius = 20
         imageContinerView.layer.borderWidth = 1.5
         imageContinerView.layer.borderColor = UIColor.white.cgColor
@@ -69,19 +69,19 @@ class ColorThemeCollectionViewCell: UICollectionViewCell {
         containerView.addSubview(imageContinerView)
     }
     
-    func setupColorView() {
+    private func setupColorView() {
         colorView.backgroundColor = UIColor.lightGray
         colorView.translatesAutoresizingMaskIntoConstraints = false
         imageContinerView.addSubview(colorView)
     }
     
-    func setupChevron() {
+    private func setupChevron() {
         chevron.image = UIImage(named: "chevron")
         chevron.translatesAutoresizingMaskIntoConstraints = false
         imageContinerView.addSubview(chevron)
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
             containerView.topAnchor.constraint(equalTo: topAnchor),

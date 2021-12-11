@@ -9,26 +9,7 @@ import UIKit
 
 class CurrentColorViewController: UIViewController {
 
-    private let presenter: CurrentColorViewOutput
-    
-    init(presenter: CurrentColorViewOutput) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var viewColors = UIView(frame: .zero)
-    var labelColors = UILabel(frame: .zero)
-    var buttonBack = UIButton(frame: .zero)
-
-    
-    var colorsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    
-    enum Paddings {
+    private enum Paddings {
         static let subviewHorizontalInset: CGFloat = 30
         
         enum ViewColor {
@@ -45,9 +26,26 @@ class CurrentColorViewController: UIViewController {
         }
     }
     
+    private let presenter: CurrentColorViewOutput
+    
+    init(presenter: CurrentColorViewOutput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private var viewColors = UIView(frame: .zero)
+    private var labelColors = UILabel(frame: .zero)
+    private var buttonBack = UIButton(frame: .zero)
+
+    private var colorsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
     }
     
@@ -56,8 +54,8 @@ class CurrentColorViewController: UIViewController {
         presenter.viewWillAppear()
     }
     
-    func setupUI() {
-        view.backgroundColor = .gray
+    private func setupUI() {
+        view.backgroundColor = UIColor(named: presenter.currentColor())
         setupViewColors()
         setupLabelColors()
         setupButtonBack()
@@ -65,7 +63,7 @@ class CurrentColorViewController: UIViewController {
         setupLayout()
     }
     
-    func setupViewColors() {
+    private func setupViewColors() {
         viewColors.layer.cornerRadius = 20
         viewColors.layer.borderWidth = 1.5
         viewColors.layer.borderColor = UIColor.white.cgColor
@@ -73,7 +71,7 @@ class CurrentColorViewController: UIViewController {
         view.addSubview(viewColors)
     }
     
-    func setupLabelColors() {
+    private func setupLabelColors() {
         labelColors.text = "Wallet currency"
         labelColors.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         labelColors.textColor = .black
@@ -81,14 +79,14 @@ class CurrentColorViewController: UIViewController {
         viewColors.addSubview(labelColors)
     }
     
-    func setupButtonBack() {
+    private func setupButtonBack() {
         buttonBack.setImage(UIImage(named: "back"), for: .normal)
         buttonBack.translatesAutoresizingMaskIntoConstraints = false
         buttonBack.addTarget(self, action: #selector(backButtonTapped(_:)), for: .touchUpInside)
         viewColors.addSubview(buttonBack)
     }
     
-    func setupColorsCollectionView() {
+    private func setupColorsCollectionView() {
         colorsCollectionView.register(CurrentColorCollectionViewCell.self, forCellWithReuseIdentifier: CurrentColorCollectionViewCell.reusedId)
         layout.scrollDirection = .vertical
         colorsCollectionView.backgroundColor = UIColor.clear
@@ -100,7 +98,7 @@ class CurrentColorViewController: UIViewController {
         view.addSubview(colorsCollectionView)
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             viewColors.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewColor.topInset),
             viewColors.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Paddings.ViewColor.horizontalInset),
@@ -120,7 +118,7 @@ class CurrentColorViewController: UIViewController {
         ])
     }
     
-    @objc func backButtonTapped(_ sender: UIButton) {
+    @objc private func backButtonTapped(_ sender: UIButton) {
         presenter.buttonBackTapped()
     }
 }

@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import UIKit
 
 class TransactionServiceImpl {
     
     var userTransaction: [UUID: [Transaction]] = [:]
+    var storedUserWallet: [Wallets] = []
 }
 
 extension TransactionServiceImpl: TransactionService {
@@ -19,46 +21,34 @@ extension TransactionServiceImpl: TransactionService {
         return currentTransaction
     }
     
-    func addNewTransaction(walletID: UUID, transaction: Transaction) {
-        if userTransaction[walletID] == nil {
-            userTransaction[walletID] = []
+    func updateTransactionIfCan(wallet: Wallet, transaction: Transaction) -> Bool {
+        
+        var needAppear = true
+
+        if userTransaction[wallet.id] == nil {
+            userTransaction[wallet.id] = []
         }
-        userTransaction[walletID]?.append(transaction)
-        print(TransactionServiceImpl().userTransaction)
+        
+        for i in 0..<userTransaction[wallet.id]!.count {
+            if userTransaction[wallet.id]![i].id == transaction.id {
+                userTransaction[wallet.id]![i] = transaction
+                needAppear = false
+                break
+            }
+        }
+        if needAppear {
+            userTransaction[wallet.id]!.append(transaction)
+        }
+        return true
     }
     
     func deleteTransaction(walletID: UUID, transaction: Transaction) {
+//        deleteTransactionFromDB(transactionID: transaction.id)
+        
         guard let cnt = userTransaction[walletID] else { return }
         for i in 0..<cnt.count {
             if cnt[i].id == transaction.id {
                 userTransaction[walletID]?.remove(at: i)
-            }
-        }
-    }
-    
-    func updateTransactionTitle(walletID: UUID, transaction: Transaction, title: String) {
-        guard let cnt = userTransaction[walletID] else { return }
-        for i in 0..<cnt.count {
-            if cnt[i].id == transaction.id {
-                userTransaction[walletID]?[i].title = title
-            }
-        }
-    }
-    
-    func updateTransactionBalance(walletID: UUID, transaction: Transaction, change: Double) {
-        guard let cnt = userTransaction[walletID] else { return }
-        for i in 0..<cnt.count {
-            if cnt[i].id == transaction.id {
-                userTransaction[walletID]?[i].change = change
-            }
-        }
-    }
-    
-    func updateTransactionNote(walletID: UUID, transaction: Transaction, note: String) {
-        guard let cnt = userTransaction[walletID] else { return }
-        for i in 0..<cnt.count {
-            if cnt[i].id == transaction.id {
-                userTransaction[walletID]?[i].note = note
             }
         }
     }

@@ -29,6 +29,8 @@ protocol CurrenciesListViewOutput: AnyObject {
     func numberOfItems() -> Int
     
     func modelOfIndex(index: Int) -> Currency
+    
+    func currentColor() -> String
 }
 
 

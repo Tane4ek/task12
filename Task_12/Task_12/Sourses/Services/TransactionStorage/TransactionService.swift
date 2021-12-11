@@ -6,18 +6,14 @@
 //
 
 import Foundation
+import CoreData
 
 protocol TransactionService {
     
     func transactions(walletID: UUID) -> [Transaction]
     
-    func addNewTransaction(walletID: UUID, transaction: Transaction)
+    func updateTransactionIfCan(wallet: Wallet, transaction: Transaction) -> Bool
     
     func deleteTransaction(walletID: UUID, transaction: Transaction)
     
-    func updateTransactionTitle(walletID: UUID, transaction: Transaction, title: String)
-    
-    func updateTransactionBalance(walletID: UUID, transaction: Transaction, change: Double)
-    
-    func updateTransactionNote(walletID: UUID, transaction: Transaction, note: String)
 }

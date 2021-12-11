@@ -9,26 +9,7 @@ import UIKit
 
 class CurrenciesListViewController: UIViewController {
     
-    private let presenter: CurrenciesListViewOutput
-    
-    init(presenter: CurrenciesListViewOutput) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var viewCurrencies = UIView(frame: .zero)
-    var labelCurrencies = UILabel(frame: .zero)
-    var buttonBack = UIButton(frame: .zero)
-
-    
-    var currenciesListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    
-    enum Paddings {
+    private enum Paddings {
         static let subviewHorizontalInset: CGFloat = 30
         
         enum ViewCurrencies {
@@ -45,7 +26,24 @@ class CurrenciesListViewController: UIViewController {
         }
     }
     
-
+    private let presenter: CurrenciesListViewOutput
+    
+    init(presenter: CurrenciesListViewOutput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private var viewCurrencies = UIView(frame: .zero)
+    private var labelCurrencies = UILabel(frame: .zero)
+    private var buttonBack = UIButton(frame: .zero)
+    
+    private var currenciesListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -57,8 +55,8 @@ class CurrenciesListViewController: UIViewController {
         setupGradient()
     }
     
-    func setupUI() {
-        view.backgroundColor = .gray
+    private func setupUI() {
+        view.backgroundColor = UIColor(named: presenter.currentColor())
         setupViewCurrencies()
         setupLabelCurrencies()
         setupButtonBack()
@@ -66,7 +64,7 @@ class CurrenciesListViewController: UIViewController {
         setupLayout()
     }
     
-    func setupViewCurrencies() {
+    private func setupViewCurrencies() {
         viewCurrencies.layer.cornerRadius = 20
         viewCurrencies.layer.borderWidth = 1.5
         viewCurrencies.layer.borderColor = UIColor.white.cgColor
@@ -74,7 +72,7 @@ class CurrenciesListViewController: UIViewController {
         view.addSubview(viewCurrencies)
     }
     
-    func setupLabelCurrencies() {
+    private func setupLabelCurrencies() {
         labelCurrencies.text = "Wallet currency"
         labelCurrencies.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         labelCurrencies.textColor = .black
@@ -82,14 +80,14 @@ class CurrenciesListViewController: UIViewController {
         viewCurrencies.addSubview(labelCurrencies)
     }
     
-    func setupButtonBack() {
+    private func setupButtonBack() {
         buttonBack.setImage(UIImage(named: "back"), for: .normal)
         buttonBack.translatesAutoresizingMaskIntoConstraints = false
         buttonBack.addTarget(self, action: #selector(backButtonTapped(_:)), for: .touchUpInside)
         viewCurrencies.addSubview(buttonBack)
     }
     
-    func setupCurrenciesListCollectionView() {
+    private func setupCurrenciesListCollectionView() {
         currenciesListCollectionView.register(CurrenciesCollectionViewCell.self, forCellWithReuseIdentifier: CurrenciesCollectionViewCell.reusedId)
         layout.scrollDirection = .vertical
         currenciesListCollectionView.backgroundColor = UIColor.clear
@@ -101,7 +99,7 @@ class CurrenciesListViewController: UIViewController {
         view.addSubview(currenciesListCollectionView)
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             viewCurrencies.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewCurrencies.topInset),
             viewCurrencies.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Paddings.ViewCurrencies.horizontalInset),
@@ -121,11 +119,11 @@ class CurrenciesListViewController: UIViewController {
         ])
     }
     
-    @objc func backButtonTapped(_ sender: UIButton) {
+    @objc private func backButtonTapped(_ sender: UIButton) {
         presenter.buttonBackTapped()
     }
     
-    func setupGradient() {
+    private func setupGradient() {
         let gradient: CAGradientLayer = CAGradientLayer()
         let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
         let leftColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.15)

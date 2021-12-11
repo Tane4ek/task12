@@ -9,12 +9,12 @@ import UIKit
 
 class HeaderCollectionReusableView: UICollectionReusableView {
    
-    var headerName = UILabel(frame: .zero)
-    
-    enum Paddings {
+    private enum Paddings {
         static let headerInset: CGFloat = 40
         static let horizontalInset : CGFloat = 47
     }
+    
+    var headerName = UILabel(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

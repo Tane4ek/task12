@@ -9,9 +9,7 @@ import UIKit
 
 class CurrentCurrencyCollectionViewCell: UICollectionViewCell {
     
-    static let reusedId = "CurrentCurrencyCollectionViewCell"
-    
-    enum Paddings {
+    private enum Paddings {
         static let horizontalInset: CGFloat = 17
         
         enum labelContinerView {
@@ -25,10 +23,12 @@ class CurrentCurrencyCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var containerView = UIView(frame: .zero)
-    var labelContinerView = UIView(frame: .zero)
-    var labelCurrency = UILabel(frame: .zero)
-    var chevron = UIImageView(frame: .zero)
+    static let reusedId = "CurrentCurrencyCollectionViewCell"
+    
+    private var containerView = UIView(frame: .zero)
+    private var labelContinerView = UIView(frame: .zero)
+    private var labelCurrency = UILabel(frame: .zero)
+    private var chevron = UIImageView(frame: .zero)
     
     var delegate: TextFieldButtonCollectionViewCellDelegate?
     var index: Int?
@@ -39,7 +39,7 @@ class CurrentCurrencyCollectionViewCell: UICollectionViewCell {
         setupUICell()
     }
     
-    func setupUICell() {
+    private func setupUICell() {
         setupContainerView()
         setupLabelContinerView()
         setupLabelCurrency()
@@ -47,7 +47,7 @@ class CurrentCurrencyCollectionViewCell: UICollectionViewCell {
         setupLayout()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.layer.cornerRadius = 20
         containerView.layer.borderWidth = 1.5
         containerView.layer.borderColor = UIColor.white.cgColor
@@ -56,7 +56,7 @@ class CurrentCurrencyCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(containerView)
     }
     
-    func setupLabelContinerView() {
+    private func setupLabelContinerView() {
         labelContinerView.layer.cornerRadius = 20
         labelContinerView.layer.borderWidth = 1.5
         labelContinerView.layer.borderColor = UIColor.white.cgColor
@@ -65,7 +65,7 @@ class CurrentCurrencyCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(labelContinerView)
     }
     
-    func setupLabelCurrency() {
+    private func setupLabelCurrency() {
         labelCurrency.text = "USD $"
         labelCurrency.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         labelCurrency.textColor = .black
@@ -74,13 +74,13 @@ class CurrentCurrencyCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(labelCurrency)
     }
     
-    func setupChevron() {
+    private func setupChevron() {
         chevron.image = UIImage(named: "chevron")
         chevron.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(chevron)
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
             containerView.topAnchor.constraint(equalTo: topAnchor),

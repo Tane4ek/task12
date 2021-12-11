@@ -9,35 +9,10 @@ import UIKit
 
 class WalletViewController: UIViewController {
     
-    private let presenter: WalletViewOutput
-    
-    init(presenter: WalletViewOutput) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var viewWallet = UIView(frame: .zero)
-    var labelName = UILabel(frame: .zero)
-    var buttonSettings = UIButton(frame: .zero)
-    var buttonBackToWallets = UIButton(frame: .zero)
-    
-    var labelBalance = UILabel(frame: .zero)
-    
-    var viewTransaction = UIView(frame: .zero)
-    var labelTransaction = UILabel(frame: .zero)
-    var buttonAllTransaction = UIButton(frame: .zero)
-    var transactionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    
-    var buttonAddTransaction = UIButton(frame: .zero)
-    
-    enum Paddings {
+    private enum Paddings {
         enum ButtonsWallet {
             static let horizontalInset: CGFloat = 30
+            static let width: CGFloat = 40
         }
         enum ViewWallet {
             static let topInset: CGFloat = 60
@@ -77,9 +52,34 @@ class WalletViewController: UIViewController {
         }
     }
     
+    private let presenter: WalletViewOutput
+    
+    init(presenter: WalletViewOutput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private var viewWallet = UIView(frame: .zero)
+    private var labelName = UILabel(frame: .zero)
+    private var buttonSettings = UIButton(frame: .zero)
+    private var buttonBackToWallets = UIButton(frame: .zero)
+    
+    private var labelBalance = UILabel(frame: .zero)
+    
+    private var viewTransaction = UIView(frame: .zero)
+    private var labelTransaction = UILabel(frame: .zero)
+    private var buttonAllTransaction = UIButton(frame: .zero)
+    private var transactionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+    
+    private var buttonAddTransaction = UIButton(frame: .zero)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
@@ -88,7 +88,7 @@ class WalletViewController: UIViewController {
         setupGradient()
     }
     
-    func setupUI() {
+    private func setupUI() {
         view.backgroundColor = .gray
         setupViewWallet()
         setupLabelWallet()
@@ -103,34 +103,35 @@ class WalletViewController: UIViewController {
         setupLayout()
     }
     
-    func setupViewWallet() {
+    private func setupViewWallet() {
         viewWallet = viewStyle()
         view.addSubview(viewWallet)
     }
     
-    func setupLabelWallet() {
+    private func setupLabelWallet() {
         labelName.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         labelName.textColor = .black
+        labelName.textAlignment = .left
         labelName.translatesAutoresizingMaskIntoConstraints = false
         labelName.minimumScaleFactor = 0.5
         viewWallet.addSubview(labelName)
     }
     
-    func setupButtonSettings() {
+    private func setupButtonSettings() {
         buttonSettings.setImage(UIImage(named: "settings"), for: .normal)
         buttonSettings.translatesAutoresizingMaskIntoConstraints = false
         buttonSettings.addTarget(self, action: #selector(buttonSettingsTapped(_:)), for: .touchUpInside)
         viewWallet.addSubview(buttonSettings)
     }
     
-    func setupButtonBackToWallets() {
+    private func setupButtonBackToWallets() {
         buttonBackToWallets.setImage(UIImage(named: "wallets"), for: .normal)
         buttonBackToWallets.translatesAutoresizingMaskIntoConstraints = false
         buttonBackToWallets.addTarget(self, action: #selector(buttonBackToWalletsTapped(_:)), for: .touchUpInside)
         viewWallet.addSubview(buttonBackToWallets)
     }
     
-    func setupLabelBalance() {
+    private func setupLabelBalance() {
         labelBalance.font = UIFont(name: "Montserrat-SemiBold", size: 36)
         labelBalance.textColor = .black
         labelBalance.textAlignment = .center
@@ -141,12 +142,12 @@ class WalletViewController: UIViewController {
         view.addSubview(labelBalance)
     }
     
-    func setupTransactionView() {
+    private func setupTransactionView() {
         viewTransaction = viewStyle()
         view.addSubview(viewTransaction)
     }
     
-    func setupLabelTransaction() {
+    private func setupLabelTransaction() {
         labelTransaction.text = "Transaction"
         labelTransaction.font = UIFont(name: "Montserrat-SemiBold", size: 17)
         labelTransaction.textColor = .black
@@ -154,23 +155,21 @@ class WalletViewController: UIViewController {
         viewTransaction.addSubview(labelTransaction)
     }
     
-    func setupButtonAllTransaction() {
+    private func setupButtonAllTransaction() {
         buttonAllTransaction = buttonStyle()
         buttonAllTransaction.setTitle("See all", for: .normal)
         buttonAllTransaction.addTarget(self, action: #selector(buttonAllTransactionTapped(_:)), for: .touchUpInside)
         viewTransaction.addSubview(buttonAllTransaction)
     }
     
-    
-    
-    func setupButtonAddTransaction() {
+    private func setupButtonAddTransaction() {
         buttonAddTransaction = buttonStyle()
         buttonAddTransaction.setTitle("Add Transaction", for: .normal)
         buttonAddTransaction.addTarget(self, action: #selector(buttonAddTransactionTapped(_:)), for: .touchUpInside)
         viewTransaction.addSubview(buttonAddTransaction)
     }
     
-    func setupTransactionCollectionView() {
+    private func setupTransactionCollectionView() {
         transactionCollectionView.register(TransactionCollectionViewCell.self, forCellWithReuseIdentifier: TransactionCollectionViewCell.reusedId)
         layout.scrollDirection = .vertical
         transactionCollectionView.backgroundColor = UIColor.clear
@@ -183,7 +182,7 @@ class WalletViewController: UIViewController {
         viewTransaction.addSubview(transactionCollectionView)
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             viewWallet.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewWallet.topInset),
             viewWallet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Paddings.ViewWallet.horizontalInset),
@@ -192,14 +191,16 @@ class WalletViewController: UIViewController {
             
             buttonBackToWallets.centerYAnchor.constraint(equalTo: viewWallet.centerYAnchor),
             buttonBackToWallets.leadingAnchor.constraint(equalTo: viewWallet.leadingAnchor, constant: Paddings.ButtonsWallet.horizontalInset),
+            buttonBackToWallets.widthAnchor.constraint(equalToConstant: Paddings.ButtonsWallet.width),
             
             labelName.centerYAnchor.constraint(equalTo: viewWallet.centerYAnchor),
             labelName.leadingAnchor.constraint(equalTo: buttonBackToWallets.trailingAnchor, constant: Paddings.LabelName.horizontalInset),
-//            labelName.trailingAnchor.constraint(equalTo: buttonSettings.leadingAnchor, constant: Paddings.LabelName.horizontalInset),
+            labelName.trailingAnchor.constraint(equalTo: buttonSettings.leadingAnchor, constant: -Paddings.LabelName.horizontalInset),
             
             buttonSettings.centerYAnchor.constraint(equalTo: viewWallet.centerYAnchor),
             buttonSettings.trailingAnchor.constraint(equalTo: viewWallet.trailingAnchor, constant: -Paddings.ButtonsWallet.horizontalInset),
-//            buttonSettings.leadingAnchor.constraint(equalTo: labelName.trailingAnchor, constant: Paddings.LabelName.horizontalInset),
+            buttonSettings.leadingAnchor.constraint(equalTo: labelName.trailingAnchor, constant: Paddings.LabelName.horizontalInset),
+            buttonSettings.widthAnchor.constraint(equalToConstant: Paddings.ButtonsWallet.width),
             
             labelBalance.topAnchor.constraint(equalTo: viewWallet.bottomAnchor, constant: Paddings.LabelBalance.topInset),
             labelBalance.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Paddings.LabelBalance.horizontalInset),
@@ -230,7 +231,7 @@ class WalletViewController: UIViewController {
         ])
     }
     
-    func viewStyle() -> UIView {
+    private func viewStyle() -> UIView {
         let viewStyle = UIView()
         viewStyle.layer.cornerRadius = 20
         viewStyle.layer.borderWidth = 1.5
@@ -239,7 +240,7 @@ class WalletViewController: UIViewController {
         return viewStyle
     }
     
-    func buttonStyle() -> UIButton {
+    private func buttonStyle() -> UIButton {
         let buttonStyle = UIButton()
         buttonStyle.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 20)
         buttonStyle.setTitleColor(UIColor(named: "Green Blue Crayola"), for: .normal)
@@ -251,7 +252,7 @@ class WalletViewController: UIViewController {
         return buttonStyle
     }
     
-    func setupGradient() {
+    private func setupGradient() {
         let gradient: CAGradientLayer = CAGradientLayer()
         let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
         let leftColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.15)
@@ -264,20 +265,20 @@ class WalletViewController: UIViewController {
         viewWallet.clipsToBounds = true
     }
     
-    @objc func buttonSettingsTapped(_ sender: UIButton) {
+    @objc private func buttonSettingsTapped(_ sender: UIButton) {
         presenter.buttonSettingsTapped()
         print("button tapped")
     }
     
-    @objc func buttonBackToWalletsTapped(_ sender: UIButton) {
+    @objc private func buttonBackToWalletsTapped(_ sender: UIButton) {
         presenter.buttonBackTapped()
     }
     
-    @objc func buttonAllTransactionTapped(_ sender: UIButton) {
+    @objc private func buttonAllTransactionTapped(_ sender: UIButton) {
         presenter.buttonAllTapped()
     }
     
-    @objc func buttonAddTransactionTapped(_ sender: UIButton) {
+    @objc private func buttonAddTransactionTapped(_ sender: UIButton) {
         presenter.buttonAddTapped()
     }
 }

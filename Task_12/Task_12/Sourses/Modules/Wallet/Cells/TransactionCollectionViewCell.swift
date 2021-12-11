@@ -9,9 +9,7 @@ import UIKit
 
 class TransactionCollectionViewCell: UICollectionViewCell {
     
-    static let reusedId = "TransactionCollectionViewCell"
-    
-    enum Paddings {
+    private enum Paddings {
         
         static let horizontalInset: CGFloat = 27
         
@@ -32,16 +30,19 @@ class TransactionCollectionViewCell: UICollectionViewCell {
             static let bottomInset: CGFloat = 20
         }
         enum Chevron {
-            static let horizontalInset: CGFloat = 30
+            static let rightInset: CGFloat = 30
+            static let leftInset: CGFloat = 5
         }
     }
     
-    var containerView = UIView(frame: .zero)
-    var mainView = UIView(frame: .zero)
-    var name = UILabel(frame: .zero)
-    var balance = UILabel(frame: .zero)
-    var dateOfLastChange = UILabel(frame: .zero)
-    var chevron = UIImageView(frame: .zero)
+    static let reusedId = "TransactionCollectionViewCell"
+    
+    private var containerView = UIView(frame: .zero)
+    private var mainView = UIView(frame: .zero)
+    private var name = UILabel(frame: .zero)
+    private var balance = UILabel(frame: .zero)
+    private var dateOfLastChange = UILabel(frame: .zero)
+    private var chevron = UIImageView(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,7 +50,7 @@ class TransactionCollectionViewCell: UICollectionViewCell {
         setupUICell()
     }
     
-    func setupUICell() {
+    private func setupUICell() {
         setupContainerView()
         setupMainView()
         setupName()
@@ -60,7 +61,7 @@ class TransactionCollectionViewCell: UICollectionViewCell {
         setupGradient()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.layer.cornerRadius = 20
         containerView.layer.borderWidth = 1.5
         containerView.layer.borderColor = UIColor.white.cgColor
@@ -68,7 +69,7 @@ class TransactionCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(containerView)
     }
     
-    func setupMainView() {
+    private func setupMainView() {
         mainView.layer.cornerRadius = 10
         mainView.layer.borderWidth = 1
         mainView.layer.borderColor = UIColor.black.cgColor
@@ -76,7 +77,7 @@ class TransactionCollectionViewCell: UICollectionViewCell {
         containerView.addSubview(mainView)
     }
     
-    func setupName() {
+    private func setupName() {
         name.font = UIFont(name: "Montserrat-SemiBold", size: 18)
         name.textColor = .black
         name.minimumScaleFactor = 0.5
@@ -84,27 +85,27 @@ class TransactionCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(name)
     }
     
-    func setupBalance() {
+    private func setupBalance() {
         balance.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         balance.textColor = UIColor(named: "Amaranth Red")
         balance.minimumScaleFactor = 0.5
         balance.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(balance)
     }
-    func setupDateOfLastChange() {
+    private func setupDateOfLastChange() {
         dateOfLastChange.font = UIFont(name: "Montserrat-Regular", size: 14)
         dateOfLastChange.textColor = .black
         dateOfLastChange.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(dateOfLastChange)
     }
     
-    func setupChevron() {
+    private func setupChevron() {
         chevron.image = UIImage(named: "chevron")
         chevron.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(chevron)
     }
     
-    func setupLayoutCell() {
+    private func setupLayoutCell() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
 //                                                   , constant: Paddings.horizontalInset),
@@ -130,11 +131,11 @@ class TransactionCollectionViewCell: UICollectionViewCell {
             balance.leadingAnchor.constraint(equalTo: name.trailingAnchor, constant: Paddings.Balance.horizontalInset),
             
             chevron.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            chevron.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Paddings.Chevron.horizontalInset),
-            chevron.leadingAnchor.constraint(equalTo: balance.trailingAnchor)
+            chevron.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Paddings.Chevron.rightInset),
+            chevron.leadingAnchor.constraint(equalTo: balance.trailingAnchor, constant: Paddings.Chevron.leftInset)
         ])
     }
-    func setupGradient() {
+    private func setupGradient() {
         let gradient: CAGradientLayer = CAGradientLayer()
         let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
         let leftColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.15)

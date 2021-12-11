@@ -9,9 +9,7 @@ import UIKit
 
 class WalletCollectionViewCell: UICollectionViewCell {
     
-    static let reusedId = "WalletCollectionViewCell"
-    
-    enum Paddings {
+    private enum Paddings {
         static let horizontalInset: CGFloat = 17
         static let subviewHorizontalInset: CGFloat = 30
         enum Name {
@@ -28,13 +26,15 @@ class WalletCollectionViewCell: UICollectionViewCell {
             static let bottomInset: CGFloat = 20
         }
     }
-
-    var containerView = UIView(frame: .zero)
-    var name = UILabel(frame: .zero)
-    var chevron = UIImageView(frame: .zero)
-    var balance = UILabel(frame: .zero)
-    var labelDateOfLastChange = UILabel(frame: .zero)
-    var dateOfLastChange = UILabel(frame: .zero)
+    
+    static let reusedId = "WalletCollectionViewCell"
+    
+    private var containerView = UIView(frame: .zero)
+    private var name = UILabel(frame: .zero)
+    private var chevron = UIImageView(frame: .zero)
+    private var balance = UILabel(frame: .zero)
+    private var labelDateOfLastChange = UILabel(frame: .zero)
+    private var dateOfLastChange = UILabel(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,7 +42,7 @@ class WalletCollectionViewCell: UICollectionViewCell {
         setupUICell()
     }
     
-    func setupUICell() {
+    private func setupUICell() {
         setupContainerView()
         setupName()
         setupChevron()
@@ -53,7 +53,7 @@ class WalletCollectionViewCell: UICollectionViewCell {
         setupGradient()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.layer.cornerRadius = 20
         containerView.layer.borderWidth = 1.5
         containerView.layer.borderColor = UIColor.white.cgColor
@@ -61,7 +61,7 @@ class WalletCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(containerView)
     }
     
-    func setupName() {
+    private func setupName() {
         name.text = "Name"
         name.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         name.textColor = .black
@@ -70,13 +70,13 @@ class WalletCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(name)
     }
     
-    func setupChevron() {
+    private func setupChevron() {
         chevron.image = UIImage(named: "chevron")
         chevron.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(chevron)
     }
     
-    func setupBalance() {
+    private func setupBalance() {
         balance.text = "12 $"
         balance.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         balance.textColor = .black
@@ -84,7 +84,7 @@ class WalletCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(balance)
     }
     
-    func setupLabelDateOfLastChange() {
+    private func setupLabelDateOfLastChange() {
         labelDateOfLastChange.text = "Last change"
         labelDateOfLastChange.font = UIFont(name: "Montserrat-SemiBold", size: 18)
         labelDateOfLastChange.textColor = .black
@@ -92,7 +92,7 @@ class WalletCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(labelDateOfLastChange)
     }
     
-    func setupDateOfLastChange() {
+    private func setupDateOfLastChange() {
         dateOfLastChange.text = "September 10, 2021"
         dateOfLastChange.font = UIFont(name: "Montserrat-Regular", size: 18)
         dateOfLastChange.textColor = .black
@@ -100,7 +100,7 @@ class WalletCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(dateOfLastChange)
     }
     
-    func setupLayoutCell() {
+    private func setupLayoutCell() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
             containerView.topAnchor.constraint(equalTo: topAnchor),
@@ -124,7 +124,7 @@ class WalletCollectionViewCell: UICollectionViewCell {
             dateOfLastChange.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -Paddings.DateOfLastChange.bottomInset)
         ])
     }
-    func setupGradient() {
+    private func setupGradient() {
         let gradient: CAGradientLayer = CAGradientLayer()
         let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
         let leftColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.15)

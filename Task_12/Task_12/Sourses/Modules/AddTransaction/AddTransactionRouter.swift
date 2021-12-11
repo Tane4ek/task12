@@ -22,7 +22,7 @@ class AddTransactionRouter {
     }
     
     func showAlert() {
-        let alert = UIAlertController(title: "Attention", message: "Cannot contain letters", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Attention", message: "Wallet name must be more than one character", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         view?.present(alert, animated: true, completion: nil)
     }

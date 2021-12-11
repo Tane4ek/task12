@@ -29,4 +29,6 @@ protocol CurrentColorViewOutput: AnyObject {
     func numberOfItems() -> Int
     
     func modelOfIndex(index: Int) -> Color
+    
+    func currentColor() -> String
 }

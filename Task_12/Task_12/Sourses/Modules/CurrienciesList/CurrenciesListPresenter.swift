@@ -15,7 +15,12 @@ class CurrenciesListPresenter {
     var currencyServise: CurrencyService?
     
     weak var output: CurrenciesListModuleOutput?
-//    var newWallet: Wallet?
+    
+    var color: String
+    
+    init(color: String) {
+        self.color = color
+    }
 //
 //    var walletService: WalletService?
 //    var wallet: Wallet?
@@ -54,5 +59,9 @@ extension CurrenciesListPresenter: CurrenciesListViewOutput {
     func modelOfIndex(index: Int) -> Currency {
         let currentModel = models[index]
         return currentModel
+    }
+    
+    func currentColor() -> String {
+        return color
     }
 }

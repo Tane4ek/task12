@@ -41,7 +41,5 @@ protocol AddWalletViewOutput: AnyObject {
     
     func currentModel() -> Wallet
     
-//    func currentCurrency() -> Currency
-    
     func numberOfItems() -> Int
 }

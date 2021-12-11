@@ -11,7 +11,7 @@ class CurrentColorCollectionViewCell: UICollectionViewCell {
     
     static let reusedId = "CurrentColorCollectionViewCell"
     
-    enum Paddings {
+    private enum Paddings {
         
 //        enum ContinerView {
 //            static let horizontalInset: CGFloat = 20
@@ -25,8 +25,8 @@ class CurrentColorCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var containerView = UIView(frame: .zero)
-    var colorView = UIImageView(frame: .zero)
+    private var containerView = UIView(frame: .zero)
+    private var colorView = UIImageView(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,13 +34,13 @@ class CurrentColorCollectionViewCell: UICollectionViewCell {
         setupUICell()
     }
     
-    func setupUICell() {
+    private func setupUICell() {
         setupContainerView()
         setupColorView()
         setupLayout()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.layer.cornerRadius = 20
         containerView.layer.borderWidth = 1.5
         containerView.layer.borderColor = UIColor.white.cgColor
@@ -49,13 +49,13 @@ class CurrentColorCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(containerView)
     }
     
-    func setupColorView() {
+    private func setupColorView() {
         colorView.backgroundColor = UIColor.lightGray
         colorView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(colorView)
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.topAnchor.constraint(equalTo: topAnchor),

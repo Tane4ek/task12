@@ -11,7 +11,7 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
     
     static let reusedId = "TextFieldSwitchCollectionViewCell"
     
-    enum Paddings {
+    private enum Paddings {
         static let horizontalInset: CGFloat = 17
         
         enum TextField {
@@ -25,13 +25,13 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var containerView = UIView(frame: .zero)
+    private var containerView = UIView(frame: .zero)
     var textField = UITextField(frame: .zero)
-    var segmentedControl = UISegmentedControl()
+    private var segmentedControl = UISegmentedControl()
     var delegate: TextInputCollectionViewCellDelegate?
     var textFieldIndex: Int?
     
-    var textFieldSign: String = " "
+    private var textFieldSign: String = " "
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,7 +39,7 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
         setupUICell()
     }
     
-    func setupUICell() {
+    private func setupUICell() {
         
         setupContainerView()
         setuptextField()
@@ -47,7 +47,7 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
         setupLayout()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.layer.cornerRadius = 20
         containerView.layer.borderWidth = 1.5
         containerView.layer.borderColor = UIColor.white.cgColor
@@ -56,7 +56,7 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(containerView)
     }
     
-    func setuptextField() {
+    private func setuptextField() {
         textField.placeholder = "Type here..."
         textField.textAlignment = .left
         textField.font = UIFont(name: "Montserrat-SemiBold", size: 24)
@@ -72,7 +72,7 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(textField)
     }
     
-    func setupSegmentedControl() {
+    private func setupSegmentedControl() {
         segmentedControl = UISegmentedControl(items: ["Outcome", "Income"])
         segmentedControl.backgroundColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
         segmentedControl.layer.cornerRadius = 9
@@ -96,7 +96,7 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(segmentedControl)
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
             containerView.topAnchor.constraint(equalTo: topAnchor),
@@ -125,14 +125,24 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func selectedValue(target: UISegmentedControl) {
-
+        
         if target == self.segmentedControl {
             if target.selectedSegmentIndex == 0 {
-                textField.text?.insert("-", at: textField.text?.startIndex ?? textFieldSign.startIndex)
+                if !(textField.text!.hasPrefix("-")) {
+                    textField.text?.insert("-", at: textField.text?.startIndex ?? textFieldSign.startIndex)
+                }
+                if let delegate = delegate {
+                    delegate.getData(data: textField.text!, index: textFieldIndex ?? 0)
+                }
             } else {
-                textField.text?.remove(at: textField.text?.startIndex ?? textFieldSign.startIndex)
-                textFieldSign = ""
-                print("incoming tapped", textFieldSign)
+                if textField.text!.hasPrefix("-") {
+                    textField.text?.remove(at: textField.text?.startIndex ?? textFieldSign.startIndex)
+                    textFieldSign = ""
+                    print("incoming tapped", textFieldSign)
+                    if let delegate = delegate {
+                        delegate.getData(data: textField.text!, index: textFieldIndex ?? 0)
+                    }
+                }
             }
         }
     }
@@ -142,35 +152,37 @@ extension TextFieldSwitchCollectionViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if let delegate = delegate {
-                    delegate.dataTransfer(index: textFieldIndex ?? 0)
-                }
+            delegate.dataTransfer(index: textFieldIndex ?? 0)
+        }
         return true;
     }
     
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        if let delegate = delegate {
-//            if textField.text?.count != 0 {
-//                    guard let text = textField.text else { return }
-//                text.insert(textFieldIndex, at: 0)
-//                    delegate.getData(data: text, index: textFieldIndex ?? 0)
-//            }
-//        }
-//    }
+    //    func textFieldDidEndEditing(_ textField: UITextField) {
+    //        if let delegate = delegate {
+    //            if textField.text?.count != 0 {
+    //                    guard let text = textField.text else { return }
+    //                text.insert(textFieldIndex, at: 0)
+    //                    delegate.getData(data: text, index: textFieldIndex ?? 0)
+    //            }
+    //        }
+    //    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        
         guard let currentText = textField.text else {return false}
         print("текст со знаком", currentText)
-            guard let stringRange = Range(range, in: currentText) else { return false }
-            let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-//        if updatedText.count != 0 {
-//                    let allowCharacters = CharacterSet(charactersIn: "-0123456789")
-//                    let characterSet = CharacterSet(charactersIn: string)
-//                    return allowCharacters.isSuperset(of: characterSet)
-//                }
-        
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+//                if updatedText.count != 0 {
+//                            let allowCharacters = CharacterSet(charactersIn: "-0123456789")
+//                            let characterSet = CharacterSet(charactersIn: string)
+//                            return allowCharacters.isSuperset(of: characterSet)
+//                        }
+
         if let delegate = delegate {
-                delegate.getData(data: updatedText, index: textFieldIndex ?? 0)
+            delegate.getData(data: updatedText, index: textFieldIndex ?? 0)
         }
-            return updatedText.count <= 9
+        return updatedText.count <= 9
     }
 }

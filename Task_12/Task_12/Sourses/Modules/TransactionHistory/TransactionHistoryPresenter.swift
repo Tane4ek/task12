@@ -26,6 +26,7 @@ extension TransactionHistoryPresenter: TransactionHistoryViewOutput {
     }
     
     func viewWillAppear() {
+//        models = transactionService?.transactionsFromDataBase(walletID: currentWallet.id) ?? []
         models = transactionService?.transactions(walletID: currentWallet.id) ?? []
         view?.reloadUI()
     }

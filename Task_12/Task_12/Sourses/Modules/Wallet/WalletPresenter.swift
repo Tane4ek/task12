@@ -27,6 +27,7 @@ extension WalletPresenter: WalletViewOutput {
     }
     
     func viewWillAppear() {
+//        models = transactionService?.transactionsFromDataBase(walletID: wallet.id) ?? []
         models = transactionService?.transactions(walletID: wallet.id) ?? []
         wallet.balance = 0
         models.forEach({
@@ -36,6 +37,7 @@ extension WalletPresenter: WalletViewOutput {
             if  wallet.id == walletService?.wallets()[i].id {
                 wallet.name = walletService?.wallets()[i].name ?? ""
                 wallet.codeCurrency = walletService?.wallets()[i].codeCurrency ?? ""
+                wallet.colorName = walletService?.wallets()[i].colorName ?? ""
             }
         }
         view?.reloadUI()

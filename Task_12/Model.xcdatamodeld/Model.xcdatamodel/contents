@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Wallets" representedClassName="Wallets" syncable="YES" codeGenerationType="class"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Transactions" representedClassName="Transactions" syncable="YES">
+        <attribute name="change" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="codeCurrency" optional="YES" attributeType="String"/>
+        <attribute name="colorName" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="fromWallet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Wallets" inverseName="myTransactions" inverseEntity="Wallets"/>
+    </entity>
+    <entity name="Wallets" representedClassName="Wallets" syncable="YES">
+        <attribute name="balance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="codeCurrency" optional="YES" attributeType="String"/>
+        <attribute name="colorName" optional="YES" attributeType="String"/>
+        <attribute name="dateOfLastChange" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="myTransactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Transactions" inverseName="fromWallet" inverseEntity="Transactions"/>
+    </entity>
     <elements>
-        <element name="Wallets" positionX="-63" positionY="-18" width="128" height="29"/>
+        <element name="Wallets" positionX="-63" positionY="-18" width="128" height="134"/>
+        <element name="Transactions" positionX="-27" positionY="63" width="128" height="149"/>
     </elements>
 </model>

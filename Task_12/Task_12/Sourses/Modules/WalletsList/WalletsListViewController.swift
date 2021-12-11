@@ -10,26 +10,7 @@ import UIKit
 
 class WalletsListViewController: UIViewController {
     
-    private let presenter: WalletListViewOutput
-    
-    init(presenter: WalletListViewOutput) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var viewWallet = UIView(frame: .zero)
-    var labelWallet = UILabel(frame: .zero)
-    var buttonAdd = UIButton(frame: .zero)
-    var labelNoWallet = UILabel(frame: .zero)
-    
-    var walletListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    
-    enum Paddings {
+    private enum Paddings {
         static let subviewHorizontalInset: CGFloat = 30
         
         enum ViewWallet {
@@ -41,6 +22,25 @@ class WalletsListViewController: UIViewController {
             static let topInset: CGFloat = 40
         }
     }
+    
+    private let presenter: WalletListViewOutput
+    
+    init(presenter: WalletListViewOutput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private var viewWallet = UIView(frame: .zero)
+    private var labelWallet = UILabel(frame: .zero)
+    private var buttonAdd = UIButton(frame: .zero)
+    private  var labelNoWallet = UILabel(frame: .zero)
+    
+    private var walletListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,10 +57,12 @@ class WalletsListViewController: UIViewController {
         presenter.viewWillAppear()
         if presenter.numberOfItems() != 0 {
             labelNoWallet.isHidden = true
+        } else {
+            labelNoWallet.isHidden = false
         }
     }
     
-    func setupUI() {
+    private func setupUI() {
         view.backgroundColor = .gray
         navigationController?.navigationBar.isHidden = true
         setupViewWallet()
@@ -71,7 +73,7 @@ class WalletsListViewController: UIViewController {
         setupLayout()
     }
     
-    func setupViewWallet() {
+    private  func setupViewWallet() {
         viewWallet.layer.cornerRadius = 20
         viewWallet.layer.borderWidth = 1.5
         viewWallet.layer.borderColor = UIColor.white.cgColor
@@ -79,7 +81,7 @@ class WalletsListViewController: UIViewController {
         view.addSubview(viewWallet)
     }
     
-    func setupLabelWallet() {
+    private  func setupLabelWallet() {
         labelWallet.text = "Wallets"
         labelWallet.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         labelWallet.textColor = .black
@@ -87,14 +89,14 @@ class WalletsListViewController: UIViewController {
         viewWallet.addSubview(labelWallet)
     }
     
-    func setupButtonAdd() {
+    private func setupButtonAdd() {
         buttonAdd.setImage(UIImage(named: "add"), for: .normal)
         buttonAdd.translatesAutoresizingMaskIntoConstraints = false
         buttonAdd.addTarget(self, action: #selector(addWalletButtonTapped(_:)), for: .touchUpInside)
         viewWallet.addSubview(buttonAdd)
     }
     
-    func setupNoWalletLabel() {
+    private func setupNoWalletLabel() {
         labelNoWallet.text = "No wallets created 😢"
         labelNoWallet.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         labelNoWallet.textColor = .black
@@ -102,7 +104,7 @@ class WalletsListViewController: UIViewController {
         view.addSubview(labelNoWallet)
     }
     
-    func setupWalletListCollectionView() {
+    private func setupWalletListCollectionView() {
         walletListCollectionView.register(WalletCollectionViewCell.self, forCellWithReuseIdentifier: WalletCollectionViewCell.reusedId)
         layout.scrollDirection = .vertical
         walletListCollectionView.backgroundColor = UIColor.clear
@@ -114,7 +116,7 @@ class WalletsListViewController: UIViewController {
         view.addSubview(walletListCollectionView)
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             viewWallet.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewWallet.topInset),
             viewWallet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Paddings.ViewWallet.horizontalInset),
@@ -137,11 +139,11 @@ class WalletsListViewController: UIViewController {
         ])
     }
     
-    @objc func addWalletButtonTapped(_ sender: UIButton) {
+    @objc private func addWalletButtonTapped(_ sender: UIButton) {
         presenter.buttonAddTapped()
     }
     
-    func setupGradient() {
+    private func setupGradient() {
         let gradient: CAGradientLayer = CAGradientLayer()
         let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
         let leftColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.15)

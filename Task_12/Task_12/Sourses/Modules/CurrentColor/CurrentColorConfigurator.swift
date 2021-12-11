@@ -15,8 +15,8 @@ final class CurrentColorModuleConfigurator {
         self.serviceContainer = serviceContainer
     }
     
-    func configure(output: CurrentColorModuleOutput) -> CurrentColorViewController {
-        let presenter = CurrentColorPresenter()
+    func configure(output: CurrentColorModuleOutput, color: String) -> CurrentColorViewController {
+        let presenter = CurrentColorPresenter(color: color)
         let view = CurrentColorViewController(presenter: presenter)
         let router = CurrentColorRouter(serviceContainer: serviceContainer)
         

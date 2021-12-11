@@ -9,25 +9,7 @@ import UIKit
 
 class TransactionHistoryViewController: UIViewController {
     
-    private let presenter: TransactionHistoryViewOutput
-    
-    init(presenter: TransactionHistoryViewOutput) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var viewTransaction = UIView(frame: .zero)
-    var labelTransaction = UILabel(frame: .zero)
-    var buttonBackToWallet = UIButton(frame: .zero)
-    
-    var transactionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    
-    enum Paddings {
+    private enum Paddings {
         enum ButtonBack {
             static let horizontalInset: CGFloat = 30
         }
@@ -47,9 +29,28 @@ class TransactionHistoryViewController: UIViewController {
         }
     }
     
+    private let presenter: TransactionHistoryViewOutput
+    
+    init(presenter: TransactionHistoryViewOutput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private var viewTransaction = UIView(frame: .zero)
+    private var labelTransaction = UILabel(frame: .zero)
+    private var buttonBackToWallet = UIButton(frame: .zero)
+    
+    private var transactionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
@@ -60,7 +61,7 @@ class TransactionHistoryViewController: UIViewController {
         
     }
     
-    func setupUI() {
+    private func setupUI() {
         view.backgroundColor = .gray
         setupViewTransaction()
         setupLabelTransaction()
@@ -69,7 +70,7 @@ class TransactionHistoryViewController: UIViewController {
         setupLayout()
     }
     
-    func setupViewTransaction() {
+    private func setupViewTransaction() {
         viewTransaction.layer.cornerRadius = 20
         viewTransaction.layer.borderWidth = 1.5
         viewTransaction.layer.borderColor = UIColor.white.cgColor
@@ -77,7 +78,7 @@ class TransactionHistoryViewController: UIViewController {
         view.addSubview(viewTransaction)
     }
     
-    func setupLabelTransaction() {
+    private func setupLabelTransaction() {
         labelTransaction.text = "Transaction"
         labelTransaction.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         labelTransaction.textColor = .black
@@ -85,14 +86,14 @@ class TransactionHistoryViewController: UIViewController {
         viewTransaction.addSubview(labelTransaction)
     }
     
-    func setupButtonBackToWallet() {
+    private func setupButtonBackToWallet() {
         buttonBackToWallet.setImage(UIImage(named: "back"), for: .normal)
         buttonBackToWallet.translatesAutoresizingMaskIntoConstraints = false
         buttonBackToWallet.addTarget(self, action: #selector(buttonBackToWalletTapped(_:)), for: .touchUpInside)
         viewTransaction.addSubview(buttonBackToWallet)
     }
     
-    func setupTransactionCollectionView() {
+    private func setupTransactionCollectionView() {
         transactionCollectionView.register(TransactionCollectionViewCell.self, forCellWithReuseIdentifier: TransactionCollectionViewCell.reusedId)
         layout.scrollDirection = .vertical
         transactionCollectionView.backgroundColor = UIColor.clear
@@ -104,7 +105,7 @@ class TransactionHistoryViewController: UIViewController {
         view.addSubview(transactionCollectionView)
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             viewTransaction.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewTransaction.topInset),
             viewTransaction.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Paddings.ViewTransaction.horizontalInset),
@@ -126,11 +127,11 @@ class TransactionHistoryViewController: UIViewController {
     }
     
     
-    @objc func buttonBackToWalletTapped(_ sender: UIButton) {
+    @objc private func buttonBackToWalletTapped(_ sender: UIButton) {
         presenter.buttonBackTapped()
     }
     
-    func setupGradient() {
+    private func setupGradient() {
         let gradient: CAGradientLayer = CAGradientLayer()
         let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
         let leftColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.15)

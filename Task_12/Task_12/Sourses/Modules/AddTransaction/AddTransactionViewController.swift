@@ -9,26 +9,7 @@ import UIKit
 
 class AddTransactionViewController: UIViewController {
     
-    private let presenter: AddTransactionViewOutput
-    
-    init(presenter: AddTransactionViewOutput) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var viewTransaction = UIView(frame: .zero)
-    var labelAddTransaction = UILabel(frame: .zero)
-    var buttonBack = UIButton(frame: .zero)
-    
-    var addTransactionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    let collectionViewHeaderReuseIdentifier = "HeaderCollectionReusableView"
-    
-    enum Paddings {
+    private enum Paddings {
         static let subviewHorizontalInset: CGFloat = 30
         
         enum ViewTransaction {
@@ -44,12 +25,31 @@ class AddTransactionViewController: UIViewController {
         }
     }
     
-    enum AddTransactionSection: Int {
+    private enum AddTransactionSection: Int {
         case title = 0
         case change
         case note
     }
     
+    private let presenter: AddTransactionViewOutput
+    
+    init(presenter: AddTransactionViewOutput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private var viewTransaction = UIView(frame: .zero)
+    private var labelAddTransaction = UILabel(frame: .zero)
+    private var buttonBack = UIButton(frame: .zero)
+    
+    private var addTransactionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+    private let collectionViewHeaderReuseIdentifier = "HeaderCollectionReusableView"
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -64,7 +64,7 @@ class AddTransactionViewController: UIViewController {
         presenter.viewWillAppear()
     }
     
-    func setupUI() {
+    private func setupUI() {
         view.backgroundColor = .gray
         setupViewTransaction()
         setupLabelTransaction()
@@ -74,7 +74,7 @@ class AddTransactionViewController: UIViewController {
         setupLayout()
     }
     
-    func setupViewTransaction() {
+    private func setupViewTransaction() {
         viewTransaction.layer.cornerRadius = 20
         viewTransaction.layer.borderWidth = 1.5
         viewTransaction.layer.borderColor = UIColor.white.cgColor
@@ -82,22 +82,21 @@ class AddTransactionViewController: UIViewController {
         view.addSubview(viewTransaction)
     }
     
-    func setupLabelTransaction() {
-        //        labelAddTransaction.text = "Add transaction"
+    private func setupLabelTransaction() {
         labelAddTransaction.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         labelAddTransaction.textColor = .black
         labelAddTransaction.translatesAutoresizingMaskIntoConstraints = false
         viewTransaction.addSubview(labelAddTransaction)
     }
     
-    func setupButtonBack() {
+    private func setupButtonBack() {
         buttonBack.setImage(UIImage(named: "back"), for: .normal)
         buttonBack.translatesAutoresizingMaskIntoConstraints = false
         buttonBack.addTarget(self, action: #selector(backButtonTapped(_:)), for: .touchUpInside)
         viewTransaction.addSubview(buttonBack)
     }
     
-    func setupAddTransactionCollectionView() {
+    private func setupAddTransactionCollectionView() {
         addTransactionCollectionView.register(TextFieldCollectionViewCell.self, forCellWithReuseIdentifier: TextFieldCollectionViewCell.reusedId)
         addTransactionCollectionView.register(TextFieldSwitchCollectionViewCell.self, forCellWithReuseIdentifier: TextFieldSwitchCollectionViewCell.reusedId)
         addTransactionCollectionView.register(TextViewCollectionViewCell.self, forCellWithReuseIdentifier: TextViewCollectionViewCell.reusedId)
@@ -113,9 +112,7 @@ class AddTransactionViewController: UIViewController {
         view.addSubview(addTransactionCollectionView)
     }
     
-    
-    
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             viewTransaction.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewTransaction.topInset),
             viewTransaction.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Paddings.ViewTransaction.horizontalInset),
@@ -136,11 +133,11 @@ class AddTransactionViewController: UIViewController {
         ])
     }
     
-    @objc func backButtonTapped(_ sender: UIButton) {
+    @objc private func backButtonTapped(_ sender: UIButton) {
         presenter.buttonBackTapped(wallet: presenter.currentUserWallet())
     }
     
-    func setupGradient() {
+    private func setupGradient() {
         let gradient: CAGradientLayer = CAGradientLayer()
         let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
         let leftColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.15)
@@ -153,7 +150,7 @@ class AddTransactionViewController: UIViewController {
         viewTransaction.clipsToBounds = true
     }
     
-    func registerForKeyboardNotification() {
+    private func registerForKeyboardNotification() {
         self.registerForKeyboardWillShowNotification(self.addTransactionCollectionView)
         self.registerForKeyboardWillHideNotification(self.addTransactionCollectionView)
     }
@@ -196,7 +193,6 @@ extension AddTransactionViewController: UICollectionViewDataSource {
             cell.delegate = self
             cell.textFieldIndex = indexPath.section
             cell.textField.keyboardType = .numbersAndPunctuation
-//            cell.segmentedControl.addTarget(self, action: #selector(segmentControlTapped(_:)), for: .valueChanged)
             cell.configure(model: presenter.currentModel())
             return cell
         } else {
@@ -204,13 +200,14 @@ extension AddTransactionViewController: UICollectionViewDataSource {
             cell.delegate = self
             cell.textViewIndex = indexPath.section
             cell.configure(model: presenter.currentModel())
+            cell.buttonSave.addTarget(self, action: #selector(buttonSaveTapped(_:)), for: .touchUpInside)
             return cell
         }
     }
     
-//    @objc func segmentControlTapped(_ sender: UISegmentedControl) {
-//        presenter.segmentControlTapped()
-//    }
+    @objc func buttonSaveTapped(_ sender: UIButton) {
+        presenter.buttonSaveTapped(wallet: presenter.currentUserWallet())
+    }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let headerView = addTransactionCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: collectionViewHeaderReuseIdentifier, for: indexPath) as! HeaderCollectionReusableView
@@ -268,29 +265,6 @@ extension AddTransactionViewController {
         })
     }
 }
-
-//MARK: - textFieldDelegate
-//extension AddTransactionViewController: UITextFieldDelegate {
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        let frame = self.addTransactionCollectionView.convert(textField.bounds, from: textField)
-//        let cellCenter = CGPoint(x: frame.midX, y: frame.midY)
-//        let indexPath = self.addTransactionCollectionView.indexPathForItem(at: cellCenter)
-//        guard let indexPath = indexPath else {
-//            return false
-//        }
-//
-//        if indexPath.section == TransactionSections.title.rawValue {
-//            let nextCell = self.addTransactionCollectionView.cellForItem(at: IndexPath.init(row: 0, section: TransactionSections.change.rawValue)) as! TextFieldSwitchCollectionViewCell
-//            nextCell.textField.becomeFirstResponder()
-//        }
-//        else if indexPath.section == TransactionSections.change.rawValue {
-//            let nextCell = self.addTransactionCollectionView.cellForItem(at: IndexPath.init(row: 0, section: TransactionSections.note.rawValue)) as! TextViewCollectionViewCell
-//            nextCell.textView.becomeFirstResponder()
-//        }
-//
-//        return true
-//    }
-//}
 
 extension AddTransactionViewController: TextInputCollectionViewCellDelegate {
     func dataTransfer(index: Int) {

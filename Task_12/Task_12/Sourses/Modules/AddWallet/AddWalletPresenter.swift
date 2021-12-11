@@ -10,16 +10,18 @@ import Foundation
 class AddWalletPresenter {
     
     weak var view: AddWalletViewInput?
-    var newWallet: Wallet?
     var router: AddWalletRouter?
     var walletServise: WalletService?
     var currency: Currency?
     
     weak var output: CurrenciesListModuleOutput?
     
-    var wallet: Wallet?
+    var wallet: Wallet
+    let isEditMode: Bool
+    
     init(wallet: Wallet?){
-        self.wallet = wallet
+        self.isEditMode = wallet != nil
+        self.wallet = wallet ?? Wallet(id: UUID(), name: "", balance: 0, dateOfLastChange: Date.now, codeCurrency: "", colorName: "Celadon")
     }
 }
 
@@ -34,88 +36,52 @@ extension AddWalletPresenter: AddWalletViewOutput {
     }
     
     func addData(data: String) {
-        if  wallet == nil && (newWallet == nil || newWallet?.codeCurrency == "") {
-            newWallet = Wallet(id: UUID(), name: data, balance: 0, dateOfLastChange: Date.now, codeCurrency: "", colorName: "")
-            print("если валюта НЕ выбрана", newWallet)
-        } else if newWallet?.codeCurrency != "" && wallet == nil {
-            newWallet?.name = data
-            print("если валюта выбрана", newWallet)
-        } else if wallet != nil{
-            wallet?.name = data
+            wallet.name = data
             print("изменяем кошелек", wallet)
-        }
     }
     
     func addCurrency(currency: String) {
-        newWallet?.codeCurrency = currency
+        wallet.codeCurrency = currency
     }
     
-    
-    
     func buttonSaveTapped() {
-//        если зашли в создание кошелька и сразу нажали на save
-        if newWallet == nil && wallet == nil {
+        if wallet.name.isEmpty {
+//            если имя пустое
             router?.showAlert()
-//            если выбрали валюту, но не дали имя кошельку
-        } else if newWallet?.name == "" && wallet == nil {
-            router?.showAlert()
-//            если удалили в окне редактирования имя кошелька
-        } else if wallet?.name == "" {
-            router?.showAlert()
+            return
         }
-        walletServise?.wallets().forEach({
-            if $0.name == newWallet?.name {
-                router?.showAlertSameWallet()
-                newWallet = nil
-            }
-        })
-        if wallet == nil && newWallet?.name != "" {
-        guard let newUserWallet = newWallet else {return}
-        walletServise?.addNewWallet(wallet: newUserWallet)
+        let result = walletServise?.updateWalletIfCan(wallet: wallet)
+        if result == true {
+            router?.returnToWalletModule()
             print(WalletServiceImpl().wallets())
-        } else if wallet != nil {
-            walletServise?.updadeWalletName(walletID: wallet!.id, name: wallet!.name)
+        } else {
+            router?.showAlertSameWallet()
         }
-        router?.returnToWalletModule()
     }
     
     func showCurrencyModule() {
-        router?.showCurrencyModule(output: self)
+        router?.showCurrencyModule(output: self, color: wallet.colorName)
     }
     
     func showCurrentColorModule() {
-        router?.showCurrentColorModule(output: self)
+        router?.showCurrentColorModule(output: self, color: wallet.colorName)
     }
     
     func buttonBackTapped() {
-        router?.returnToWalletListModule()
+        router?.returnToWalletModule()
     }
     
     func buttonDeleteTapped() {
-        walletServise?.deleteWallet(walletID: wallet!.id)
+        walletServise?.deleteWallet(walletID: wallet.id)
         router?.returnToWalletListModule()
     }
     
     func currentLabel() -> String {
-        var currentLabel = ""
-        if wallet == nil {
-            currentLabel = "Add new Wallet"
-        } else {
-            currentLabel = "Edit wallet"
-        }
-        return currentLabel
+        isEditMode ? "Edit wallet" : "Add new Wallet"
     }
     
     func currentModel() -> Wallet {
-        var currentWallet: Wallet?
-        if wallet != nil {
-            currentWallet = wallet
-        } else if newWallet != nil {
-            currentWallet = newWallet
-        } else {
-            currentWallet = Wallet(id: UUID(), name: "", balance: 0, dateOfLastChange: Date.now, codeCurrency: "", colorName: "Celadon")
-        }
-        return currentWallet!
+        return wallet
     }
     
     func numberOfItems() -> Int {
@@ -125,32 +91,12 @@ extension AddWalletPresenter: AddWalletViewOutput {
 
 extension AddWalletPresenter: CurrenciesListModuleOutput {
     func chooseCurrency(currency: Currency) {
-        if wallet != nil {
-            wallet?.codeCurrency = currency.symbol
-            walletServise?.updateWalletCurrency(walletID: wallet!.id, currentCode: currency.symbol)
-            print("изменили валюту кошелька", wallet)
-        } else if wallet == nil && newWallet != nil {
-            newWallet?.codeCurrency = currency.symbol
-            print("если имя не записано", newWallet)
-        } else if newWallet == nil {
-            newWallet = Wallet(id: UUID(), name: "", balance: 0, dateOfLastChange: Date.now, codeCurrency: currency.symbol, colorName: "Celadon")
-            print("если имя есть", newWallet)
-        }
+        wallet.codeCurrency = currency.symbol
     }
 }
 
 extension AddWalletPresenter: CurrentColorModuleOutput {
     func chooseColor(color: Color) {
-        if wallet != nil {
-            wallet?.colorName = color.name
-            walletServise?.updateWalletColor(walletID: wallet!.id, colorName: color.name)
-            print("изменили валюту кошелька", wallet)
-        } else if wallet == nil && newWallet != nil {
-            newWallet?.colorName = color.name
-            print("если имя не записано", newWallet)
-        } else if newWallet == nil {
-            newWallet = Wallet(id: UUID(), name: "", balance: 0, dateOfLastChange: Date.now, codeCurrency: "", colorName: color.name)
-            print("если имя есть", newWallet)
-        }
+        wallet.colorName = color.name
     }
 }

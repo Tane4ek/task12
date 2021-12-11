@@ -9,16 +9,15 @@ import UIKit
 
 class CurrenciesCollectionViewCell: UICollectionViewCell {
     
-    static let reusedId = "CurrenciesCollectionViewCell"
-    
-    enum Paddings {
+    private enum Paddings {
         static let horizontalInset: CGFloat = 17
         static let subViewHorizontalInset: CGFloat = 30
     }
+    static let reusedId = "CurrenciesCollectionViewCell"
     
-    var containerView = UIView(frame: .zero)
-    var name = UILabel(frame: .zero)
-    var code = UILabel(frame: .zero)
+    private var containerView = UIView(frame: .zero)
+    private var name = UILabel(frame: .zero)
+    private var code = UILabel(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,7 +25,7 @@ class CurrenciesCollectionViewCell: UICollectionViewCell {
         setupUICell()
     }
     
-    func setupUICell() {
+    private func setupUICell() {
         setupContainerView()
         setupName()
         setupCode()
@@ -34,7 +33,7 @@ class CurrenciesCollectionViewCell: UICollectionViewCell {
         setupGradient()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.layer.cornerRadius = 20
         containerView.layer.borderWidth = 1.5
         containerView.layer.borderColor = UIColor.white.cgColor
@@ -42,7 +41,7 @@ class CurrenciesCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(containerView)
     }
     
-    func setupName() {
+    private func setupName() {
         name.text = "American Dollar"
         name.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         name.textColor = .black
@@ -53,7 +52,7 @@ class CurrenciesCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(name)
     }
     
-    func setupCode() {
+    private func setupCode() {
         code.text = "USD"
         code.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         code.textColor = .black
@@ -61,7 +60,7 @@ class CurrenciesCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(code)
     }
     
-    func setupLayoutCell() {
+    private func setupLayoutCell() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
             containerView.topAnchor.constraint(equalTo: topAnchor),
@@ -77,7 +76,7 @@ class CurrenciesCollectionViewCell: UICollectionViewCell {
             code.widthAnchor.constraint(equalToConstant: 65),
         ])
     }
-    func setupGradient() {
+    private func setupGradient() {
         let gradient: CAGradientLayer = CAGradientLayer()
         let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
         let leftColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.15)

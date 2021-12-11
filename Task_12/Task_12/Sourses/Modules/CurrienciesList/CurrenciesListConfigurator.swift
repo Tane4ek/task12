@@ -15,8 +15,8 @@ final class CurrenciesListModuleConfigurator {
         self.serviceContainer = serviceContainer
     }
     
-    func configure(output: CurrenciesListModuleOutput) -> CurrenciesListViewController {
-        let presenter = CurrenciesListPresenter()
+    func configure(output: CurrenciesListModuleOutput, color: String) -> CurrenciesListViewController {
+        let presenter = CurrenciesListPresenter(color: color)
         let view = CurrenciesListViewController(presenter: presenter)
         let router = CurrenciesListRouter(serviceContainer: serviceContainer)
         

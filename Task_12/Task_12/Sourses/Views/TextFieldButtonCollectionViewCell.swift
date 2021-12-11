@@ -9,9 +9,7 @@ import UIKit
 
 class TextFieldButtonCollectionViewCell: UICollectionViewCell {
     
-    static let reusedId = "TextFieldButtonCollectionViewCell"
-    
-    enum Paddings {
+    private enum Paddings {
         static let horizontalInset: CGFloat = 17
         
         enum textField {
@@ -24,9 +22,10 @@ class TextFieldButtonCollectionViewCell: UICollectionViewCell {
             static let width: CGFloat = 70
         }
     }
+    static let reusedId = "TextFieldButtonCollectionViewCell"
     
-    var containerView = UIView(frame: .zero)
-    var textField = UITextField(frame: .zero)
+    private var containerView = UIView(frame: .zero)
+    private var textField = UITextField(frame: .zero)
     var buttonSave = UIButton(frame: .zero)
     var delegate: TextFieldButtonCollectionViewCellDelegate?
     var textFieldIndex: Int?
@@ -36,7 +35,7 @@ class TextFieldButtonCollectionViewCell: UICollectionViewCell {
         setupUICell()
     }
     
-    func setupUICell() {
+    private func setupUICell() {
         
         setupContainerView()
         setuptextField()
@@ -44,7 +43,7 @@ class TextFieldButtonCollectionViewCell: UICollectionViewCell {
         setupLayout()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.layer.cornerRadius = 20
         containerView.layer.borderWidth = 1.5
         containerView.layer.borderColor = UIColor.white.cgColor
@@ -53,7 +52,7 @@ class TextFieldButtonCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(containerView)
     }
     
-    func setuptextField() {
+    private func setuptextField() {
         textField.placeholder = "Start here..."
         textField.textAlignment = .left
         textField.font = UIFont(name: "Montserrat-SemiBold", size: 24)
@@ -69,7 +68,7 @@ class TextFieldButtonCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(textField)
     }
     
-    func setupButtonSave() {
+    private func setupButtonSave() {
         buttonSave.setTitle("Save", for: .normal)
         buttonSave.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         buttonSave.setTitleColor(UIColor(named: "Green Blue Crayola"), for: .normal)
@@ -80,7 +79,7 @@ class TextFieldButtonCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(buttonSave)
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
             containerView.topAnchor.constraint(equalTo: topAnchor),
@@ -120,7 +119,7 @@ extension TextFieldButtonCollectionViewCell: UITextFieldDelegate {
             let currentText = textField.text ?? ""
             guard let stringRange = Range(range, in: currentText) else { return false }
 
-            let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+           let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
         
         if let delegate = delegate {
                 delegate.getData(data: updatedText)

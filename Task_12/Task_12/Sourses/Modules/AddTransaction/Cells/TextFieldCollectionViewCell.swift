@@ -9,9 +9,7 @@ import UIKit
 
 class TextFieldCollectionViewCell: UICollectionViewCell {
     
-    static let reusedId = "TextFieldCollectionViewCell"
-    
-    enum Paddings {
+    private enum Paddings {
         static let horizontalInset: CGFloat = 17
         
         enum textField {
@@ -26,7 +24,9 @@ class TextFieldCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var containerView = UIView(frame: .zero)
+    static let reusedId = "TextFieldCollectionViewCell"
+    
+    private var containerView = UIView(frame: .zero)
     var textField = UITextField(frame: .zero)
     var delegate: TextInputCollectionViewCellDelegate?
     //    var buttonSave = UIButton(frame: .zero)
@@ -38,7 +38,7 @@ class TextFieldCollectionViewCell: UICollectionViewCell {
         setupUICell()
     }
     
-    func setupUICell() {
+    private func setupUICell() {
         
         setupContainerView()
         setuptextField()
@@ -46,7 +46,7 @@ class TextFieldCollectionViewCell: UICollectionViewCell {
         setupLayout()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.layer.cornerRadius = 20
         containerView.layer.borderWidth = 1.5
         containerView.layer.borderColor = UIColor.white.cgColor
@@ -55,7 +55,7 @@ class TextFieldCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(containerView)
     }
     
-    func setuptextField() {
+    private func setuptextField() {
         textField.placeholder = "Start here..."
         textField.textAlignment = .left
         textField.font = UIFont(name: "Montserrat-SemiBold", size: 24)
@@ -83,7 +83,7 @@ class TextFieldCollectionViewCell: UICollectionViewCell {
     //        contentView.addSubview(buttonSave)
     //    }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
             containerView.topAnchor.constraint(equalTo: topAnchor),

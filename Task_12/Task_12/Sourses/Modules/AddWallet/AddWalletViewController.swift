@@ -9,27 +9,7 @@ import UIKit
 
 class AddWalletViewController: UIViewController {
     
-    private let presenter: AddWalletViewOutput
-    
-    init(presenter: AddWalletViewOutput) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var viewWallet = UIView(frame: .zero)
-    var labelAddWallet = UILabel(frame: .zero)
-    var buttonBack = UIButton(frame: .zero)
-    var buttonDelete = UIButton(frame: .zero)
-    
-    var addWalletCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    let collectionViewHeaderReuseIdentifier = "HeaderCollectionReusableView"
-    
-    enum Paddings {
+    private enum Paddings {
         static let subviewHorizontalInset: CGFloat = 30
         
         enum viewWallet {
@@ -43,13 +23,36 @@ class AddWalletViewController: UIViewController {
         enum AddWalletCollectionView {
             static let topInset: CGFloat = 20
         }
+        enum Buttons {
+            static let width: CGFloat = 40
+        }
     }
     
-    enum AddWalletSection: Int {
+    private enum AddWalletSection: Int {
         case colorTheme = 0
         case currency
         case title
     }
+    
+    private let presenter: AddWalletViewOutput
+    
+    init(presenter: AddWalletViewOutput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private var viewWallet = UIView(frame: .zero)
+    private var labelAddWallet = UILabel(frame: .zero)
+    private var buttonBack = UIButton(frame: .zero)
+    private var buttonDelete = UIButton(frame: .zero)
+    
+    private var addWalletCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+    private let collectionViewHeaderReuseIdentifier = "HeaderCollectionReusableView"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +71,7 @@ class AddWalletViewController: UIViewController {
         }
     }
     
-    func setupUI() {
+    private func setupUI() {
         view.backgroundColor = .gray
         setupViewWallet()
         setupLabelWallet()
@@ -79,7 +82,7 @@ class AddWalletViewController: UIViewController {
         setupLayout()
     }
     
-    func setupViewWallet() {
+    private func setupViewWallet() {
         viewWallet.layer.cornerRadius = 20
         viewWallet.layer.borderWidth = 1.5
         viewWallet.layer.borderColor = UIColor.white.cgColor
@@ -87,28 +90,28 @@ class AddWalletViewController: UIViewController {
         view.addSubview(viewWallet)
     }
     
-    func setupLabelWallet() {
+    private func setupLabelWallet() {
         labelAddWallet.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         labelAddWallet.textColor = .black
         labelAddWallet.translatesAutoresizingMaskIntoConstraints = false
         viewWallet.addSubview(labelAddWallet)
     }
     
-    func setupButtonBack() {
+    private func setupButtonBack() {
         buttonBack.setImage(UIImage(named: "back"), for: .normal)
         buttonBack.translatesAutoresizingMaskIntoConstraints = false
         buttonBack.addTarget(self, action: #selector(backButtonTapped(_:)), for: .touchUpInside)
         viewWallet.addSubview(buttonBack)
     }
     
-    func setupButtonDelete() {
+    private func setupButtonDelete() {
         buttonDelete.setImage(UIImage(named: "delete"), for: .normal)
         buttonDelete.translatesAutoresizingMaskIntoConstraints = false
         buttonDelete.addTarget(self, action: #selector(deleteButtonTapped(_:)), for: .touchUpInside)
         viewWallet.addSubview(buttonDelete)
     }
     
-    func setupAddWalletCollectionView() {
+    private func setupAddWalletCollectionView() {
         addWalletCollectionView.register(ColorThemeCollectionViewCell.self, forCellWithReuseIdentifier: ColorThemeCollectionViewCell.reusedId)
         addWalletCollectionView.register(CurrentCurrencyCollectionViewCell.self, forCellWithReuseIdentifier: CurrentCurrencyCollectionViewCell.reusedId)
         addWalletCollectionView.register(TextFieldButtonCollectionViewCell.self, forCellWithReuseIdentifier: TextFieldButtonCollectionViewCell.reusedId)
@@ -124,9 +127,7 @@ class AddWalletViewController: UIViewController {
         addWalletCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    
-    
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             viewWallet.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.viewWallet.topInset),
             viewWallet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Paddings.viewWallet.horizontalInset),
@@ -135,12 +136,15 @@ class AddWalletViewController: UIViewController {
             
             buttonBack.centerYAnchor.constraint(equalTo: viewWallet.centerYAnchor),
             buttonBack.leadingAnchor.constraint(equalTo: viewWallet.leadingAnchor, constant: Paddings.subviewHorizontalInset),
+            buttonBack.widthAnchor.constraint(equalToConstant: Paddings.Buttons.width),
             
             buttonDelete.centerYAnchor.constraint(equalTo: viewWallet.centerYAnchor),
             buttonDelete.trailingAnchor.constraint(equalTo: viewWallet.trailingAnchor, constant: -Paddings.subviewHorizontalInset),
+            buttonDelete.widthAnchor.constraint(equalToConstant: Paddings.Buttons.width),
             
             labelAddWallet.centerYAnchor.constraint(equalTo: viewWallet.centerYAnchor),
             labelAddWallet.leadingAnchor.constraint(equalTo: buttonBack.trailingAnchor, constant: Paddings.addWallet.horizontalInset),
+            labelAddWallet.trailingAnchor.constraint(equalTo: buttonDelete.leadingAnchor, constant: -Paddings.addWallet.horizontalInset),
             
             addWalletCollectionView.topAnchor.constraint(equalTo: viewWallet.bottomAnchor, constant: Paddings.AddWalletCollectionView.topInset),
             addWalletCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -150,16 +154,16 @@ class AddWalletViewController: UIViewController {
         ])
     }
     
-    @objc func backButtonTapped(_ sender: UIButton) {
+    @objc private func backButtonTapped(_ sender: UIButton) {
         presenter.buttonBackTapped()
     }
     
-    @objc func deleteButtonTapped(_ sender: UIButton) {
+    @objc private func deleteButtonTapped(_ sender: UIButton) {
         presenter.buttonDeleteTapped()
     }
     
     
-    func setupGradient() {
+    private func setupGradient() {
         let gradient: CAGradientLayer = CAGradientLayer()
         let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
         let leftColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.15)
@@ -172,7 +176,7 @@ class AddWalletViewController: UIViewController {
         viewWallet.clipsToBounds = true
     }
     
-    func registerForKeyboardNotification() {
+    private func registerForKeyboardNotification() {
         self.registerForKeyboardWillShowNotification(self.addWalletCollectionView)
         self.registerForKeyboardWillHideNotification(self.addWalletCollectionView)
     }
@@ -306,8 +310,6 @@ extension AddWalletViewController: UITextFieldDelegate {
 extension AddWalletViewController: TextFieldButtonCollectionViewCellDelegate {
     func getData(data: String) {
         
-            if data.count != 0 {
                 presenter.addData(data: data)
-            }
     }
 }
