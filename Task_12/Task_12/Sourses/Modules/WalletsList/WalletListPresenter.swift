@@ -23,7 +23,8 @@ extension WalletListPresenter: WalletListViewOutput {
     }
     
     func viewWillAppear() {
-        models = wallerServise?.wallets() ?? []
+//        models = wallerServise?.wallets() ?? []
+        models = wallerServise?.walletsFromDataBase() ?? []
         view?.reloadUI()
         print("баланс из листа кошельков", models.first?.balance)
         print("ID из кошельков", models.first?.id)

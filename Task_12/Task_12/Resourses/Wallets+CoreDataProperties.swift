@@ -16,30 +16,30 @@ extension Wallets {
         return NSFetchRequest<Wallets>(entityName: "Wallets")
     }
 
-    @NSManaged public var balance: Double
-    @NSManaged public var colorName: String?
-    @NSManaged public var codeCurrency: String?
-    @NSManaged public var dateOfLastChange: Date?
     @NSManaged public var name: String?
     @NSManaged public var id: UUID?
-    @NSManaged public var myTransactions: NSSet?
+    @NSManaged public var balance: Double
+    @NSManaged public var dateOfLastChange: Date?
+    @NSManaged public var colorName: String?
+    @NSManaged public var codeCurrency: String?
+    @NSManaged public var myTransaction: NSSet?
 
 }
 
-// MARK: Generated accessors for myTransactions
+// MARK: Generated accessors for myTransaction
 extension Wallets {
 
-    @objc(addMyTransactionsObject:)
-    @NSManaged public func addToMyTransactions(_ value: Transactions)
+    @objc(addMyTransactionObject:)
+    @NSManaged public func addToMyTransaction(_ value: Transactions)
 
-    @objc(removeMyTransactionsObject:)
-    @NSManaged public func removeFromMyTransactions(_ value: Transactions)
+    @objc(removeMyTransactionObject:)
+    @NSManaged public func removeFromMyTransaction(_ value: Transactions)
 
-    @objc(addMyTransactions:)
-    @NSManaged public func addToMyTransactions(_ values: NSSet)
+    @objc(addMyTransaction:)
+    @NSManaged public func addToMyTransaction(_ values: NSSet)
 
-    @objc(removeMyTransactions:)
-    @NSManaged public func removeFromMyTransactions(_ values: NSSet)
+    @objc(removeMyTransaction:)
+    @NSManaged public func removeFromMyTransaction(_ values: NSSet)
 
 }
 
