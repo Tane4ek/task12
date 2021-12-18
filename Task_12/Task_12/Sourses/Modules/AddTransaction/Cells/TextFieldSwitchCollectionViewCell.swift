@@ -157,32 +157,46 @@ extension TextFieldSwitchCollectionViewCell: UITextFieldDelegate {
         return true;
     }
     
-    //    func textFieldDidEndEditing(_ textField: UITextField) {
-    //        if let delegate = delegate {
-    //            if textField.text?.count != 0 {
-    //                    guard let text = textField.text else { return }
-    //                text.insert(textFieldIndex, at: 0)
-    //                    delegate.getData(data: text, index: textFieldIndex ?? 0)
-    //            }
-    //        }
-    //    }
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
+        let allowCharacters = CharacterSet(charactersIn: "-0123456789")
+        let characterSet = CharacterSet(charactersIn: string)
+        let shouldReplace = allowCharacters.isSuperset(of: characterSet)
+        if !shouldReplace {
+            return false
+        }
         
         guard let currentText = textField.text else {return false}
         print("текст со знаком", currentText)
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-//                if updatedText.count != 0 {
-//                            let allowCharacters = CharacterSet(charactersIn: "-0123456789")
-//                            let characterSet = CharacterSet(charactersIn: string)
-//                            return allowCharacters.isSuperset(of: characterSet)
-//                        }
-
+        if updatedText.count > 9 {
+            return false
+        }
+        
+        var minusCount = 0
+        var firstMinus = false
+        var i = 0
+        for ch in updatedText {
+            if ch == "-" {
+                minusCount += 1
+                if i == 0 {
+                    firstMinus = true
+                }
+            }
+            i += 1
+        }
+        
+        if minusCount > 1 {
+            return false
+        }
+        
+        if minusCount == 1 && !firstMinus {
+            return false
+        }
+        
         if let delegate = delegate {
             delegate.getData(data: updatedText, index: textFieldIndex ?? 0)
         }
-        return updatedText.count <= 9
+        return true
     }
 }
