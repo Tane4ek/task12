@@ -12,8 +12,7 @@ import UIKit
 class TransactionServiceImpl {
     
     var userTransaction: [UUID: [Transaction]] = [:]
-    var storedUserTransactions: [NSManagedObject] = []
-    var storedUserWallets: [NSManagedObject] = []
+    var storedUserTransactions: [Transactions] = []
     var storedUserWallet: [Wallets] = []
 }
 
@@ -83,9 +82,9 @@ extension TransactionServiceImpl: TransactionService {
     }
     
     func saveToDataBase(wallet: Wallet, transaction: Transaction) {
-//         Создать ManagedObject из Transaction и сохранить его
+        //         Создать ManagedObject из Transaction и сохранить его
         let managedContext = createManagedContext()
-
+        
         let transactionEntity = NSEntityDescription.entity(forEntityName: "Transactions", in: managedContext!)!
         
         let userTransactions = Transactions(entity: transactionEntity, insertInto: managedContext)
@@ -130,39 +129,20 @@ extension TransactionServiceImpl: TransactionService {
         
         var transactionFromDB: [Transaction] = []
         let managedContext = createManagedContext()
-//        let transactionFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Transactions")
-//        transactionFetchRequest.predicate = NSPredicate(format: "fromwallet.id = %@", walletID as CVarArg)
-//
-//        let walletFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Wallets")
-//        walletFetchRequest.predicate = NSPredicate(format: "id = %@", walletID as CVarArg)
         
         let transactionFetchRequest = createRequestForWalletIDFromTransaction(walletID: walletID)
         let walletFetchRequest = createRequestForWalletID(walletID: walletID)
         do {
-            let storedUserTransactionsInDataBase = try managedContext!.fetch(transactionFetchRequest)
-            let storedUserWalletsInDataBase = try managedContext!.fetch(walletFetchRequest)
+            storedUserTransactions = try managedContext!.fetch(transactionFetchRequest)
+            storedUserWallet = try managedContext!.fetch(walletFetchRequest)
             
-//            storedUserTransactionsInDataBase.forEach {
-////            устанавливаем значение цвета и валюты из текущего кошелька
-//                $0.codeCurrency = storedUserWalletsInDataBase.first?.codeCurrency
-//                $0.colorName = storedUserWalletsInDataBase.first?.colorName
-//            }
-            storedUserTransactionsInDataBase.forEach { let transaction = Transaction(id: $0.id!, title: $0.title!, change: $0.change, date: $0.date!, note: $0.note!, codeCurrency: storedUserWalletsInDataBase.first?.codeCurrency ?? "", colorName: (storedUserWalletsInDataBase.first?.colorName)!)
+            storedUserTransactions.forEach { let transaction = Transaction(id: $0.id!, title: $0.title!, change: $0.change, date: $0.date!, note: $0.note!, codeCurrency: storedUserWallet.first?.codeCurrency ?? "", colorName: (storedUserWallet.first?.colorName)!)
                 transactionFromDB.append(transaction)
             }
-        
+            
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        
-//        storedUserTransactions.forEach {
-////            устанавливаем значение цвета и валюты из текущего кошелька
-//            $0.setValue(storedUserWallets.first?.value(forKey: "codeCurrency"), forKey: "codeCurrency")
-//            $0.setValue(storedUserWallets.first?.value(forKey: "colorName"), forKey: "colorName")
-//        }
-//        storedUserTransactions.forEach { let transaction = Transaction(id: $0.value(forKey: "id") as! UUID, title: $0.value(forKey: "title") as! String, change: $0.value(forKey: "change") as! Double, date: $0.value(forKey: "date") as! Date, note: $0.value(forKey: "note") as! String, codeCurrency: $0.value(forKey: "codeCurrency") as! String, colorName: $0.value(forKey: "colorName") as! String)
-//            transactionFromDB.append(transaction)
-//        }
         return transactionFromDB
     }
     
@@ -171,7 +151,7 @@ extension TransactionServiceImpl: TransactionService {
         let managedContext = createManagedContext()
         
         let fetchRequest = createRequestForTransactionID(transactionId: transactionID)
-
+        
         if let storedUserTransaction = try? managedContext!.fetch(fetchRequest) {
             managedContext!.delete(storedUserTransaction.first!)
             
@@ -188,17 +168,17 @@ extension TransactionServiceImpl: TransactionService {
         
         let fetchRequest = createRequestForTransactionID(transactionId: transaction.id)
         
-        if let storedUserTransaction = try? managedContext!.fetch(fetchRequest) {
-            storedUserTransaction.first?.title = transaction.title
-            storedUserTransaction.first?.change = transaction.change
-            storedUserTransaction.first?.note = transaction.note
-
-            do {
-                try managedContext!.save()
-
-            } catch let error as NSError {
-                print("Could not update. \(error), \(error.userInfo)")
-            }
+        storedUserTransactions = try! managedContext!.fetch(fetchRequest)
+        storedUserTransactions.first?.title = transaction.title
+        storedUserTransactions.first?.change = transaction.change
+        storedUserTransactions.first?.note = transaction.note
+        
+        do {
+            try managedContext!.save()
+            
+        } catch let error as NSError {
+            print("Could not update. \(error), \(error.userInfo)")
         }
     }
+    
 }

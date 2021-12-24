@@ -12,7 +12,7 @@ import UIKit
 class WalletServiceImpl {
     
     var userWallets: [Wallet] = []
-    var storedUserWallets: [NSManagedObject] = []
+    var storedUserWallets: [Wallets] = []
 }
 
 extension WalletServiceImpl: WalletService {
@@ -74,10 +74,10 @@ extension WalletServiceImpl: WalletService {
     }
     
     func saveToDataBase(wallet: Wallet) {
-//         Создать ManagedObject из Wallet и сохранить его
-
+        //         Создать ManagedObject из Wallet и сохранить его
+        
         let managedContext = createManagedContext()
-
+        
         let entity = NSEntityDescription.entity(forEntityName: "Wallets", in: managedContext!)!
         let userWallet = Wallets(entity: entity, insertInto: managedContext)
         
@@ -87,7 +87,7 @@ extension WalletServiceImpl: WalletService {
         userWallet.colorName = wallet.colorName
         userWallet.codeCurrency = wallet.codeCurrency
         userWallet.dateOfLastChange = wallet.dateOfLastChange
-
+        
         do {
             try managedContext?.save()
             storedUserWallets.append(userWallet)
@@ -100,20 +100,17 @@ extension WalletServiceImpl: WalletService {
         // Получить все ManagedObject и конвертировать их в [Wallet]
         var walletsFromDB: [Wallet] = []
         let managedContext = createManagedContext()
-
+        
         let fetchRequest: NSFetchRequest<Wallets> = Wallets.fetchRequest()
         do {
-            let userWalletsInDataBase = try managedContext!.fetch(fetchRequest)
-            userWalletsInDataBase.forEach { let wallet = Wallet(id: $0.id!, name: $0.name!, balance: $0.balance, dateOfLastChange: $0.dateOfLastChange!, codeCurrency: $0.codeCurrency!, colorName: $0.colorName!)
+            storedUserWallets = try managedContext!.fetch(fetchRequest)
+            storedUserWallets.forEach { let wallet = Wallet(id: $0.id!, name: $0.name!, balance: $0.balance, dateOfLastChange: $0.dateOfLastChange!, codeCurrency: $0.codeCurrency!, colorName: $0.colorName!)
                 walletsFromDB.append(wallet)
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
         
-        //        storedUserWallets.forEach { let wallet = Wallet(id: $0.value(forKey: "id") as! UUID, name: $0.value(forKey: "name") as? String ?? "", balance: $0.value(forKey: "balance") as! Double, dateOfLastChange: $0.value(forKey: "dateOfLastChange") as! Date, codeCurrency: $0.value(forKey: "codeCurrency") as! String, colorName: $0.value(forKey: "colorName") as! String)
-        //            walletsFromDB.append(wallet)
-        //        }
         return walletsFromDB
     }
     
@@ -124,18 +121,17 @@ extension WalletServiceImpl: WalletService {
     }
     
     func deleteFromDataBase(walletID: UUID) {
-//        удаляем кошелек из ManagedObject
+        //        удаляем кошелек из ManagedObject
         let managedContext = createManagedContext()
         let fetchRequest = createRequestForWalletID(walletID: walletID)
         
-        if let storedUserWallets = try? managedContext!.fetch(fetchRequest) {
-            managedContext!.delete(storedUserWallets.first!)
-            
-            do {
-                try managedContext!.save()
-            } catch let error as NSError {
-                print("Could not delete. \(error), \(error.userInfo)")
-            }
+        storedUserWallets = try! managedContext!.fetch(fetchRequest)
+        managedContext!.delete(storedUserWallets.first!)
+        
+        do {
+            try managedContext!.save()
+        } catch let error as NSError {
+            print("Could not delete. \(error), \(error.userInfo)")
         }
     }
     
@@ -143,35 +139,33 @@ extension WalletServiceImpl: WalletService {
         let managedContext = createManagedContext()
         let fetchRequest = createRequestForWalletID(walletID: wallet.id)
         
-            if let currentUserWallet = try? managedContext!.fetch(fetchRequest) {
-
-                currentUserWallet.first?.name = wallet.name
-                currentUserWallet.first?.codeCurrency = wallet.codeCurrency
-                currentUserWallet.first?.colorName = wallet.colorName
-                
-                do {
-                    try managedContext!.save()
-                } catch let error as NSError {
-                    print("Could not save. \(error), \(error.userInfo)")
-                }
-            }
+        storedUserWallets = try! managedContext!.fetch(fetchRequest)
+        
+        storedUserWallets.first?.name = wallet.name
+        storedUserWallets.first?.codeCurrency = wallet.codeCurrency
+        storedUserWallets.first?.colorName = wallet.colorName
+        
+        do {
+            try managedContext!.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
     }
     
     func updateWalletBalanceInDataBase(walletID: UUID, balance: Double) {
         let managedContext = createManagedContext()
         let fetchRequest = createRequestForWalletID(walletID: walletID)
         
-        if let storedUserWallets = try? managedContext!.fetch(fetchRequest) {
-            for storedWallet in storedUserWallets {
-                if storedWallet.id == walletID {
-                    storedWallet.balance = balance
-                }
+        storedUserWallets = try! managedContext!.fetch(fetchRequest)
+        for storedWallet in storedUserWallets {
+            if storedWallet.id == walletID {
+                storedWallet.balance = balance
             }
-            do {
-                try managedContext!.save()
-            } catch let error as NSError {
-                print("Could not update. \(error), \(error.userInfo)")
-            }
+        }
+        do {
+            try managedContext!.save()
+        } catch let error as NSError {
+            print("Could not update. \(error), \(error.userInfo)")
         }
     }
 }
