@@ -15,4 +15,16 @@ task12
 - Изменение(приход/уход)
 - Комментарий
 - Пользователь может создавать, редактировать и удалять транзакции.
-<img width="416" alt="Снимок экрана 2022-02-08 в 20 22 09" src="https://user-images.githubusercontent.com/82838416/153044670-1930fdc3-997e-4231-83fd-601208e43c2b.png">
+
+
+<img width="385" alt="Снимок экрана 2022-02-08 в 20 58 17" src="https://user-images.githubusercontent.com/82838416/153048181-c118ee29-1193-48db-9251-a72356d9be72.png">
+
+<img width="409" alt="Снимок экрана 2022-02-08 в 20 59 02" src="https://user-images.githubusercontent.com/82838416/153048211-9e34584a-9107-499e-a411-3e5666781550.png">
+
+<img width="400" alt="Снимок экрана 2022-02-08 в 20 59 29" src="https://user-images.githubusercontent.com/82838416/153048226-1bb9322d-1db8-48c9-af9c-9d4a9d402cac.png">
+
+<img width="400" alt="Снимок экрана 2022-02-08 в 20 59 56" src="https://user-images.githubusercontent.com/82838416/153048244-003d8546-4b00-471a-b8c2-ef6a38f650a5.png">
+
+<img width="400" alt="Снимок экрана 2022-02-08 в 21 01 16" src="https://user-images.githubusercontent.com/82838416/153048268-4374f823-daf9-40cb-a71c-6ab106bde6f1.png">
+
+<img width="401" alt="Снимок экрана 2022-02-08 в 21 01 54" src="https://user-images.githubusercontent.com/82838416/153048312-3fb92511-e4d4-4641-a9e0-7de4bf3c9626.png">
