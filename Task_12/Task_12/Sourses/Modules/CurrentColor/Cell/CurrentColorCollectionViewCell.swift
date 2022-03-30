@@ -13,12 +13,6 @@ class CurrentColorCollectionViewCell: UICollectionViewCell {
     
     private enum Paddings {
         
-//        enum ContinerView {
-//            static let horizontalInset: CGFloat = 20
-//            static let bottomInset: CGFloat = 30
-//            static let topInset: CGFloat = 72
-//        }
-        
         enum ColorView {
             static let horizontalInset: CGFloat = 20
             static let verticallInset: CGFloat = 30
@@ -27,13 +21,19 @@ class CurrentColorCollectionViewCell: UICollectionViewCell {
     
     private var containerView = UIView(frame: .zero)
     private var colorView = UIImageView(frame: .zero)
-    
+   
+// MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupUICell()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+// MARK: - SetupUI
     private func setupUICell() {
         setupContainerView()
         setupColorView()
@@ -54,7 +54,8 @@ class CurrentColorCollectionViewCell: UICollectionViewCell {
         colorView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(colorView)
     }
-    
+
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -69,11 +70,8 @@ class CurrentColorCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+// MARK: - Configure
     func configure (model: Color) {
         colorView.backgroundColor = UIColor(named: model.name)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

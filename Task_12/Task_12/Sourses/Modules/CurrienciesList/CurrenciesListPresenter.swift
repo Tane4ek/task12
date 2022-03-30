@@ -21,11 +21,6 @@ class CurrenciesListPresenter {
     init(color: String) {
         self.color = color
     }
-//
-//    var walletService: WalletService?
-//    var wallet: Wallet?
-    
-
 }
 
 extension CurrenciesListPresenter: CurrenciesListViewOutput {

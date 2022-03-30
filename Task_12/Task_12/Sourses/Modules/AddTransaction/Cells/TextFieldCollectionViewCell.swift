@@ -29,20 +29,23 @@ class TextFieldCollectionViewCell: UICollectionViewCell {
     private var containerView = UIView(frame: .zero)
     var textField = UITextField(frame: .zero)
     var delegate: TextInputCollectionViewCellDelegate?
-    //    var buttonSave = UIButton(frame: .zero)
     var textFieldIndex: Int?
-    
+
+// MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupUICell()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+  
+// MARK: - setupUI
     private func setupUICell() {
         
         setupContainerView()
         setuptextField()
-        //        setupButtonSave()
         setupLayout()
     }
     
@@ -71,18 +74,8 @@ class TextFieldCollectionViewCell: UICollectionViewCell {
         textField.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(textField)
     }
-    
-    //    func setupButtonSave() {
-    //        buttonSave.setTitle("Save", for: .normal)
-    //        buttonSave.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 20)
-    //        buttonSave.setTitleColor(UIColor(named: "Rick Black FOGRA 29"), for: .normal)
-    //        buttonSave.layer.cornerRadius = 10
-    //        buttonSave.layer.borderColor = UIColor.white.cgColor
-    //        buttonSave.layer.borderWidth = 1.5
-    //        buttonSave.translatesAutoresizingMaskIntoConstraints = false
-    //        contentView.addSubview(buttonSave)
-    //    }
-    
+
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
@@ -95,22 +88,18 @@ class TextFieldCollectionViewCell: UICollectionViewCell {
             textField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Paddings.textField.horizontalInset),
             textField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -Paddings.textField.bottomInset),
             
-            //            buttonSave.topAnchor.constraint(equalTo: containerView.topAnchor, constant: Paddings.buttonSave.inset),
-            //            buttonSave.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Paddings.buttonSave.inset),
-            //            buttonSave.widthAnchor.constraint(equalToConstant: Paddings.buttonSave.width),
-            
         ])
     }
-    
+
+// MARK: - Configure
     func configure (model: Transaction) {
         textField.text = model.title
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    
 }
 
+// MARK: - UITextFieldDelegate
 extension TextFieldCollectionViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
@@ -121,15 +110,6 @@ extension TextFieldCollectionViewCell: UITextFieldDelegate {
         
         return true;
     }
-    
-    //    func textFieldDidEndEditing(_ textField: UITextField) {
-    //        if let delegate = delegate {
-    //            if textField.text?.count != 0 {
-    //                let text = textField.text ?? ""
-    //                delegate.getData(data: text, index: textFieldIndex ?? 0)
-    //            }
-    //        }
-    //    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""

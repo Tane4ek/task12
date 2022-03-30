@@ -7,10 +7,6 @@
 
 import Foundation
 
-// TODO: добавить поле id типа UUID
-// TODO: balance может быть дробным
-// TODO: дату лучше хранить в типе Date
-// TODO: добавить типа валюты
 struct Wallet {
     let id: UUID
     var name: String

@@ -8,6 +8,7 @@
 import Foundation
 
 protocol CurrenciesListModuleOutput: AnyObject {
+   
     func chooseCurrency(currency: Currency)
 }
 

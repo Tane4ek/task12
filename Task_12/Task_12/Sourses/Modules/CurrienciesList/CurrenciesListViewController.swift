@@ -26,8 +26,16 @@ class CurrenciesListViewController: UIViewController {
         }
     }
     
+    private var viewCurrencies = UIView(frame: .zero)
+    private var labelCurrencies = UILabel(frame: .zero)
+    private var buttonBack = UIButton(frame: .zero)
+    
+    private var currenciesListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+    
     private let presenter: CurrenciesListViewOutput
     
+// MARK: - Init
     init(presenter: CurrenciesListViewOutput) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -37,13 +45,7 @@ class CurrenciesListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var viewCurrencies = UIView(frame: .zero)
-    private var labelCurrencies = UILabel(frame: .zero)
-    private var buttonBack = UIButton(frame: .zero)
-    
-    private var currenciesListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    
+// MARK: - LifeCircle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -54,7 +56,8 @@ class CurrenciesListViewController: UIViewController {
         presenter.viewWillAppear()
         setupGradient()
     }
-    
+
+// MARK: - SetupUI
     private func setupUI() {
         view.backgroundColor = UIColor(named: presenter.currentColor())
         setupViewCurrencies()
@@ -98,7 +101,8 @@ class CurrenciesListViewController: UIViewController {
         currenciesListCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(currenciesListCollectionView)
     }
-    
+ 
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             viewCurrencies.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewCurrencies.topInset),
@@ -137,6 +141,7 @@ class CurrenciesListViewController: UIViewController {
     }
 }
 
+// MARK: - CurrenciesListViewInput
 extension CurrenciesListViewController: CurrenciesListViewInput {
     func reloadUI() {
         currenciesListCollectionView.reloadData()

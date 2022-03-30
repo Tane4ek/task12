@@ -30,11 +30,17 @@ class TextFieldButtonCollectionViewCell: UICollectionViewCell {
     var delegate: TextFieldButtonCollectionViewCellDelegate?
     var textFieldIndex: Int?
     
+// MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUICell()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+// MARK: - SetupUI
     private func setupUICell() {
         
         setupContainerView()
@@ -78,7 +84,8 @@ class TextFieldButtonCollectionViewCell: UICollectionViewCell {
         buttonSave.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(buttonSave)
     }
-    
+
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
@@ -97,16 +104,16 @@ class TextFieldButtonCollectionViewCell: UICollectionViewCell {
             
         ])
     }
-    
+
+// MARK: - Configure
     func configure (model: Wallet) {
         textField.text = model.name
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    
 }
 
+// MARK: - UITextFieldDelegate
 extension TextFieldButtonCollectionViewCell: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

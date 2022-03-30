@@ -18,13 +18,19 @@ class CurrenciesCollectionViewCell: UICollectionViewCell {
     private var containerView = UIView(frame: .zero)
     private var name = UILabel(frame: .zero)
     private var code = UILabel(frame: .zero)
-    
+  
+// MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupUICell()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+// MARK: - setupUI
     private func setupUICell() {
         setupContainerView()
         setupName()
@@ -59,7 +65,8 @@ class CurrenciesCollectionViewCell: UICollectionViewCell {
         code.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(code)
     }
-    
+ 
+// MARK: - Layout
     private func setupLayoutCell() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
@@ -76,6 +83,7 @@ class CurrenciesCollectionViewCell: UICollectionViewCell {
             code.widthAnchor.constraint(equalToConstant: 65),
         ])
     }
+    
     private func setupGradient() {
         let gradient: CAGradientLayer = CAGradientLayer()
         let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
@@ -88,13 +96,9 @@ class CurrenciesCollectionViewCell: UICollectionViewCell {
         containerView.layer.insertSublayer(gradient, at: 0)
         containerView.clipsToBounds = true
     }
-    
+// MARK: - Configure
     func configure (model: Currency) {
         name.text = model.name
         code.text = model.code
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

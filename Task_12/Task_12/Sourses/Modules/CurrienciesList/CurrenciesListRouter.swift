@@ -18,7 +18,6 @@ class CurrenciesListRouter {
     
     func backToAddWalletModule() {
         view?.navigationController?.popViewController(animated: true)
-//        view?.dismiss(animated: true, completion: nil)
     }
 }
 

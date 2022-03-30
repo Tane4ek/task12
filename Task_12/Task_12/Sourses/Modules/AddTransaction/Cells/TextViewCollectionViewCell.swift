@@ -32,12 +32,18 @@ class TextViewCollectionViewCell: UICollectionViewCell {
     var textViewIndex: Int?
     var buttonSave = UIButton(frame: .zero)
     
+// MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupUICell()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+// MARK: - setupUI
     private func setupUICell() {
 
         setupContainerView()
@@ -81,6 +87,7 @@ class TextViewCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(buttonSave)
     }
     
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
@@ -99,7 +106,8 @@ class TextViewCollectionViewCell: UICollectionViewCell {
             
         ])
     }
-    
+  
+// MARK: - Configure
     func configure (model: Transaction) {
         textView.text = model.note
         if model.note == "" {
@@ -107,12 +115,9 @@ class TextViewCollectionViewCell: UICollectionViewCell {
             textView.text = "Start here..."
         }
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
+// MARK: - UITextViewDelegate
 extension TextViewCollectionViewCell: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {

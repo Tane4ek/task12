@@ -17,6 +17,7 @@ class CurrentColorPresenter {
     weak var output: CurrentColorModuleOutput?
 
     var color: String
+    
     init(color: String) {
         self.color = color
     }

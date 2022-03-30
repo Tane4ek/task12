@@ -32,13 +32,18 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
     var textFieldIndex: Int?
     
     private var textFieldSign: String = " "
-    
+
+// MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupUICell()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+// MARK: - setupUI
     private func setupUICell() {
         
         setupContainerView()
@@ -96,6 +101,7 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(segmentedControl)
     }
     
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
@@ -112,18 +118,15 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
             segmentedControl.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Paddings.SegmentControl.horizontalInset),
         ])
     }
-    
+ 
+// MARK: - Configure
     func configure (model: Transaction) {
         textField.text = String(model.change)
         if model.change == 0.0 {
             textField.text = ""
         }
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     @objc func selectedValue(target: UISegmentedControl) {
         
         if target == self.segmentedControl {
@@ -148,6 +151,7 @@ class TextFieldSwitchCollectionViewCell: UICollectionViewCell {
     }
 }
 
+// MARK: - UITextFieldDelegate
 extension TextFieldSwitchCollectionViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

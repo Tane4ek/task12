@@ -31,8 +31,17 @@ class AddTransactionViewController: UIViewController {
         case note
     }
     
-    private let presenter: AddTransactionViewOutput
+    private var viewTransaction = UIView(frame: .zero)
+    private var labelAddTransaction = UILabel(frame: .zero)
+    private var buttonBack = UIButton(frame: .zero)
     
+    private var addTransactionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+    private let collectionViewHeaderReuseIdentifier = "HeaderCollectionReusableView"
+    
+    private let presenter: AddTransactionViewOutput
+ 
+// MARK: - Init
     init(presenter: AddTransactionViewOutput) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -42,14 +51,7 @@ class AddTransactionViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var viewTransaction = UIView(frame: .zero)
-    private var labelAddTransaction = UILabel(frame: .zero)
-    private var buttonBack = UIButton(frame: .zero)
-    
-    private var addTransactionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    private let collectionViewHeaderReuseIdentifier = "HeaderCollectionReusableView"
-
+// MARK: - LifeCircle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -63,7 +65,8 @@ class AddTransactionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         presenter.viewWillAppear()
     }
-    
+   
+// MARK: - setupUI
     private func setupUI() {
         view.backgroundColor = .gray
         setupViewTransaction()
@@ -112,6 +115,7 @@ class AddTransactionViewController: UIViewController {
         view.addSubview(addTransactionCollectionView)
     }
     
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             viewTransaction.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewTransaction.topInset),
@@ -149,13 +153,15 @@ class AddTransactionViewController: UIViewController {
         viewTransaction.layer.insertSublayer(gradient, at: 0)
         viewTransaction.clipsToBounds = true
     }
-    
+ 
+// MARK: - KeyboardNotification
     private func registerForKeyboardNotification() {
         self.registerForKeyboardWillShowNotification(self.addTransactionCollectionView)
         self.registerForKeyboardWillHideNotification(self.addTransactionCollectionView)
     }
 }
 
+// MARK: - AddTransactionViewInput
 extension AddTransactionViewController: AddTransactionViewInput {
     func reloadUI() {
         addTransactionCollectionView.reloadData()

@@ -28,6 +28,7 @@ class CurrentColorViewController: UIViewController {
     
     private let presenter: CurrentColorViewOutput
     
+// MARK: - Init
     init(presenter: CurrentColorViewOutput) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -44,6 +45,7 @@ class CurrentColorViewController: UIViewController {
     private var colorsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
     
+ // MARK: - LifeCircle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -54,6 +56,7 @@ class CurrentColorViewController: UIViewController {
         presenter.viewWillAppear()
     }
     
+// MARK: - setupUI
     private func setupUI() {
         view.backgroundColor = UIColor(named: presenter.currentColor())
         setupViewColors()
@@ -97,7 +100,8 @@ class CurrentColorViewController: UIViewController {
         colorsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(colorsCollectionView)
     }
-    
+
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             viewColors.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewColor.topInset),
@@ -123,6 +127,7 @@ class CurrentColorViewController: UIViewController {
     }
 }
 
+// MARK: - CurrentColorViewInput
 extension CurrentColorViewController: CurrentColorViewInput {
     func reloadUI() {
         colorsCollectionView.reloadData()
