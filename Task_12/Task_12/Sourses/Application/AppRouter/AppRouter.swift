@@ -10,16 +10,20 @@ import UIKit
 
 class AppRouter {
     
-    var walletService = WalletServiceImpl()
-    var transactionService = TransactionServiceImpl()
-    var currencyService = CurrencyServiceImpl()
-    var colorService = ColorServiceImpl()
+    let walletStorageImpl = WalletStorageImpl()
+    let walletService: WalletServiceImpl
+    let transactionStorageImpl = TransactionStorageImpl()
+    let transactionService: TransactionServiceImpl
+    let currencyService = CurrencyServiceImpl()
+    let colorService = ColorServiceImpl()
     
-    var serviceContainer: ServiceContainer
+    let serviceContainer: ServiceContainer
     private let window: UIWindow
     
     init(window: UIWindow) {
         self.window = window
+        self.walletService = WalletServiceImpl(walletStorageImpl: walletStorageImpl)
+        self.transactionService = TransactionServiceImpl(transactionStorageImpl: transactionStorageImpl)
         self.serviceContainer = ServiceContainer(walletService: walletService, transactionService: transactionService, currencyService: currencyService, colorService: colorService)
     }
     

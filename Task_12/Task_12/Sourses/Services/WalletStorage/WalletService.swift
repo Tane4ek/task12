@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreData
 
 protocol WalletService {
     
@@ -18,15 +17,4 @@ protocol WalletService {
 
     func deleteWallet(walletID: UUID)
     
-    func createManagedContext() -> NSManagedObjectContext?
-    
-    func saveToDataBase(wallet: Wallet)
-
-    func walletsFromDataBase() -> [Wallet]?
-    
-    func deleteFromDataBase(walletID: UUID)
-    
-    func updateInDataBase(wallet: Wallet)
-    
-    func updateWalletBalanceInDataBase(walletID: UUID, balance: Double)
 }

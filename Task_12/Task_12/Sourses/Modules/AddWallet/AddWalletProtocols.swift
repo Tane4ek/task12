@@ -29,8 +29,6 @@ protocol AddWalletViewOutput: AnyObject {
     
     func addData(data: String)
     
-    func addCurrency(currency: String)
-    
     func buttonBackTapped()
     
     func showCurrencyModule()

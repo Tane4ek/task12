@@ -15,18 +15,4 @@ protocol TransactionService {
     func updateTransactionIfCan(wallet: Wallet, transaction: Transaction) -> Bool
     
     func deleteTransaction(walletID: UUID, transaction: Transaction)
-    
-    func createManagedContext() -> NSManagedObjectContext?
-    
-    func createRequestForWalletID(walletID: UUID) -> NSFetchRequest<Wallets>
-    
-    func createRequestForWalletIDFromTransaction(walletID: UUID) -> NSFetchRequest<Transactions>
-    
-    func saveToDataBase(wallet: Wallet, transaction: Transaction)
-    
-    func transactionsFromDataBase(walletID: UUID) -> [Transaction]
-    
-    func deleteTransactionFromDB(transactionID: UUID)
-    
-    func updateTransactionInDB(transaction: Transaction)
 }

@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="UserWallet" representedClassName="UserWallet" syncable="YES" codeGenerationType="class">
-        <attribute name="balanceWallet" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="codeCurrencyWallet" optional="YES" attributeType="String"/>
-        <attribute name="colorWallet" optional="YES" attributeType="String"/>
-        <attribute name="dateOfChangeWallet" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="idWallet" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="nameWallet" optional="YES" attributeType="String"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21D49" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Transactions" representedClassName="Transactions" syncable="YES">
+        <attribute name="change" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="codeCurrency" optional="YES" attributeType="String"/>
+        <attribute name="colorName" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="fromwallet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Wallets" inverseName="myTransaction" inverseEntity="Wallets"/>
+    </entity>
+    <entity name="Wallets" representedClassName="Wallets" syncable="YES">
+        <attribute name="balance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="codeCurrency" optional="YES" attributeType="String"/>
+        <attribute name="colorName" optional="YES" attributeType="String"/>
+        <attribute name="dateOfLastChange" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="myTransaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transactions" inverseName="fromwallet" inverseEntity="Transactions"/>
     </entity>
     <elements>
-        <element name="UserWallet" positionX="-63" positionY="-18" width="128" height="119"/>
+        <element name="Wallets" positionX="-63" positionY="-18" width="128" height="134"/>
+        <element name="Transactions" positionX="-54" positionY="36" width="128" height="149"/>
     </elements>
 </model>

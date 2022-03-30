@@ -2,7 +2,7 @@
 //  Transactions+CoreDataClass.swift
 //  Task_12
 //
-//  Created by Поздняков Игорь Николаевич on 11.12.2021.
+//  Created by Tatiana Luzanova on 30.03.2022.
 //
 //
 

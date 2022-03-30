@@ -36,12 +36,8 @@ extension AddWalletPresenter: AddWalletViewOutput {
     }
     
     func addData(data: String) {
-            wallet.name = data
-            print("изменяем кошелек", wallet)
-    }
-    
-    func addCurrency(currency: String) {
-        wallet.codeCurrency = currency
+        wallet.name = data
+        print("изменяем кошелек", wallet)
     }
     
     func buttonSaveTapped() {
@@ -53,7 +49,7 @@ extension AddWalletPresenter: AddWalletViewOutput {
         let result = walletServise?.updateWalletIfCan(wallet: wallet)
         if result == true {
             router?.returnToWalletModule()
-            print(WalletServiceImpl().wallets())
+//            print(WalletServiceImpl().wallets())
         } else {
             router?.showAlertSameWallet()
         }

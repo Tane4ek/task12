@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		095B22D52764BB83001D65B1 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 095B22D32764BB83001D65B1 /* Model.xcdatamodeld */; };
-		095B22E22764BD3F001D65B1 /* Wallets+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B22DE2764BD3F001D65B1 /* Wallets+CoreDataClass.swift */; };
-		095B22E32764BD3F001D65B1 /* Wallets+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B22DF2764BD3F001D65B1 /* Wallets+CoreDataProperties.swift */; };
-		095B22E42764BD3F001D65B1 /* Transactions+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B22E02764BD3F001D65B1 /* Transactions+CoreDataClass.swift */; };
-		095B22E52764BD3F001D65B1 /* Transactions+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B22E12764BD3F001D65B1 /* Transactions+CoreDataProperties.swift */; };
 		21286FEC274B88B4002D38FF /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21286FEA274B88B4002D38FF /* Montserrat-Regular.ttf */; };
 		21286FED274B88B4002D38FF /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21286FEB274B88B4002D38FF /* Montserrat-SemiBold.ttf */; };
 		21286FF8274CF5D7002D38FF /* WalletListPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21286FF7274CF5D7002D38FF /* WalletListPresenterTest.swift */; };
@@ -92,6 +88,12 @@
 		62EDBAD42724960D00D05B1D /* TextViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EDBAD32724960D00D05B1D /* TextViewCollectionViewCell.swift */; };
 		62EDBAD62724966D00D05B1D /* TextFieldCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EDBAD52724966D00D05B1D /* TextFieldCollectionViewCell.swift */; };
 		62EDBAD82724994200D05B1D /* TextFieldSwitchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EDBAD72724994200D05B1D /* TextFieldSwitchCollectionViewCell.swift */; };
+		96CFD03F27F48F7600DCB382 /* Transactions+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CFD03B27F48F7600DCB382 /* Transactions+CoreDataClass.swift */; };
+		96CFD04027F48F7600DCB382 /* Transactions+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CFD03C27F48F7600DCB382 /* Transactions+CoreDataProperties.swift */; };
+		96CFD04127F48F7600DCB382 /* Wallets+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CFD03D27F48F7600DCB382 /* Wallets+CoreDataClass.swift */; };
+		96CFD04227F48F7600DCB382 /* Wallets+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CFD03E27F48F7600DCB382 /* Wallets+CoreDataProperties.swift */; };
+		96CFD04427F48FB600DCB382 /* WalletStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CFD04327F48FB600DCB382 /* WalletStorage.swift */; };
+		96CFD04627F48FFB00DCB382 /* TransactionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CFD04527F48FFB00DCB382 /* TransactionStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,10 +115,6 @@
 
 /* Begin PBXFileReference section */
 		095B22D42764BB83001D65B1 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		095B22DE2764BD3F001D65B1 /* Wallets+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallets+CoreDataClass.swift"; sourceTree = "<group>"; };
-		095B22DF2764BD3F001D65B1 /* Wallets+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallets+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		095B22E02764BD3F001D65B1 /* Transactions+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transactions+CoreDataClass.swift"; sourceTree = "<group>"; };
-		095B22E12764BD3F001D65B1 /* Transactions+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transactions+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		21286FEA274B88B4002D38FF /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		21286FEB274B88B4002D38FF /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		21286FF7274CF5D7002D38FF /* WalletListPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletListPresenterTest.swift; sourceTree = "<group>"; };
@@ -201,6 +199,12 @@
 		62EDBAD32724960D00D05B1D /* TextViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		62EDBAD52724966D00D05B1D /* TextFieldCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCollectionViewCell.swift; sourceTree = "<group>"; };
 		62EDBAD72724994200D05B1D /* TextFieldSwitchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSwitchCollectionViewCell.swift; sourceTree = "<group>"; };
+		96CFD03B27F48F7600DCB382 /* Transactions+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transactions+CoreDataClass.swift"; sourceTree = "<group>"; };
+		96CFD03C27F48F7600DCB382 /* Transactions+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transactions+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		96CFD03D27F48F7600DCB382 /* Wallets+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallets+CoreDataClass.swift"; sourceTree = "<group>"; };
+		96CFD03E27F48F7600DCB382 /* Wallets+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallets+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		96CFD04327F48FB600DCB382 /* WalletStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletStorage.swift; sourceTree = "<group>"; };
+		96CFD04527F48FFB00DCB382 /* TransactionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -387,10 +391,10 @@
 			isa = PBXGroup;
 			children = (
 				095B22D32764BB83001D65B1 /* Model.xcdatamodeld */,
-				095B22DE2764BD3F001D65B1 /* Wallets+CoreDataClass.swift */,
-				095B22DF2764BD3F001D65B1 /* Wallets+CoreDataProperties.swift */,
-				095B22E02764BD3F001D65B1 /* Transactions+CoreDataClass.swift */,
-				095B22E12764BD3F001D65B1 /* Transactions+CoreDataProperties.swift */,
+				96CFD03B27F48F7600DCB382 /* Transactions+CoreDataClass.swift */,
+				96CFD03C27F48F7600DCB382 /* Transactions+CoreDataProperties.swift */,
+				96CFD03D27F48F7600DCB382 /* Wallets+CoreDataClass.swift */,
+				96CFD03E27F48F7600DCB382 /* Wallets+CoreDataProperties.swift */,
 			);
 			path = Resourses;
 			sourceTree = "<group>";
@@ -444,6 +448,7 @@
 			children = (
 				62EDBA9A2719699000D05B1D /* WalletServiceImpl.swift */,
 				62EDBA9C271969EB00D05B1D /* WalletService.swift */,
+				96CFD04327F48FB600DCB382 /* WalletStorage.swift */,
 			);
 			path = WalletStorage;
 			sourceTree = "<group>";
@@ -453,6 +458,7 @@
 			children = (
 				62EDBAA227199A3C00D05B1D /* TransactionServiceImpl.swift */,
 				62EDBAA427199A5400D05B1D /* TransactionService.swift */,
+				96CFD04527F48FFB00DCB382 /* TransactionStorage.swift */,
 			);
 			path = TransactionStorage;
 			sourceTree = "<group>";
@@ -741,10 +747,8 @@
 				62EDBA5A2715859C00D05B1D /* WalletListRouter.swift in Sources */,
 				62EDBA582715858600D05B1D /* WalletsListConfigurator.swift in Sources */,
 				62897F6B27425E030045F616 /* ColorServiseImpl.swift in Sources */,
-				095B22E22764BD3F001D65B1 /* Wallets+CoreDataClass.swift in Sources */,
 				62EDBAC92724848F00D05B1D /* AddTransactionProtocols.swift in Sources */,
 				62EDBA562715856700D05B1D /* WalletsListViewController.swift in Sources */,
-				095B22E52764BD3F001D65B1 /* Transactions+CoreDataProperties.swift in Sources */,
 				62897F5E274252F10045F616 /* CurrentColorViewController.swift in Sources */,
 				62EDBAAE271D73C700D05B1D /* AddWalletRouter.swift in Sources */,
 				62897F62274253140045F616 /* CurrentColorRouter.swift in Sources */,
@@ -758,11 +762,9 @@
 				62EDBA8F2716CE2C00D05B1D /* Localization.swift in Sources */,
 				62182ED5273D103D00337E1B /* TransactionRouter.swift in Sources */,
 				62182ECA2735BEF500337E1B /* CurrenciesListViewController.swift in Sources */,
-				095B22E42764BD3F001D65B1 /* Transactions+CoreDataClass.swift in Sources */,
 				62EDBA5E27159A1B00D05B1D /* Wallet.swift in Sources */,
 				62897F6D27425E120045F616 /* ColorService.swift in Sources */,
 				62EDBACD272485D100D05B1D /* AddTransactionPresenter.swift in Sources */,
-				095B22E32764BD3F001D65B1 /* Wallets+CoreDataProperties.swift in Sources */,
 				62EDBA892716B05900D05B1D /* Helpers.swift in Sources */,
 				62EDBA912716D33700D05B1D /* WalletListProtocols.swift in Sources */,
 				62897F68274258750045F616 /* Color.swift in Sources */,
@@ -782,6 +784,8 @@
 				62EDBAA7271CA5DC00D05B1D /* TextFieldButtonCollectionViewCell.swift in Sources */,
 				62EDBAC327241B1E00D05B1D /* TransactionHistoryPresenter.swift in Sources */,
 				62182ED7273D105400337E1B /* TransactionConfigurator.swift in Sources */,
+				96CFD04027F48F7600DCB382 /* Transactions+CoreDataProperties.swift in Sources */,
+				96CFD03F27F48F7600DCB382 /* Transactions+CoreDataClass.swift in Sources */,
 				62EDBACF272485EB00D05B1D /* AddTransactionRouter.swift in Sources */,
 				62EDBA6127159ACA00D05B1D /* Transaction.swift in Sources */,
 				62EDBA5C271585AF00D05B1D /* WalletListPresenter.swift in Sources */,
@@ -790,6 +794,7 @@
 				62EDBA952717028C00D05B1D /* WalletViewController.swift in Sources */,
 				62EDBA27271583B000D05B1D /* SceneDelegate.swift in Sources */,
 				62EDBA9D271969EB00D05B1D /* WalletService.swift in Sources */,
+				96CFD04427F48FB600DCB382 /* WalletStorage.swift in Sources */,
 				62EDBAA527199A5400D05B1D /* TransactionService.swift in Sources */,
 				62EDBAAC271D720200D05B1D /* AddWalletPresenter.swift in Sources */,
 				62EDBAA9271D6F5A00D05B1D /* AddWalletProtocols.swift in Sources */,
@@ -798,6 +803,7 @@
 				62182ECD2735C9EF00337E1B /* CurrenciesCollectionViewCell.swift in Sources */,
 				62EDBAB42721518200D05B1D /* WalletProtocols.swift in Sources */,
 				62897F64274253290045F616 /* CurrentColorConfigurator.swift in Sources */,
+				96CFD04227F48F7600DCB382 /* Wallets+CoreDataProperties.swift in Sources */,
 				62EDBAB2271D83C300D05B1D /* CurrentCurrencyCollectionViewCell.swift in Sources */,
 				095B22D52764BB83001D65B1 /* Model.xcdatamodeld in Sources */,
 				62182EC22735BE6D00337E1B /* CurrenciesListProtocols.swift in Sources */,
@@ -809,6 +815,8 @@
 				62EDBA9F27196B9500D05B1D /* ServiceContainer .swift in Sources */,
 				62182ECF273D0FC900337E1B /* TransactionProtocols.swift in Sources */,
 				62EDBA972719658300D05B1D /* ColorThemeCollectionViewCell.swift in Sources */,
+				96CFD04127F48F7600DCB382 /* Wallets+CoreDataClass.swift in Sources */,
+				96CFD04627F48FFB00DCB382 /* TransactionStorage.swift in Sources */,
 				62182ED1273D101000337E1B /* TransactionViewController.swift in Sources */,
 				62EDBAB0271D74EB00D05B1D /* AddWalletConfigurator.swift in Sources */,
 				62EDBA9B2719699000D05B1D /* WalletServiceImpl.swift in Sources */,
