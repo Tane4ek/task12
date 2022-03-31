@@ -52,17 +52,6 @@ class WalletViewController: UIViewController {
         }
     }
     
-    private let presenter: WalletViewOutput
-    
-    init(presenter: WalletViewOutput) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private var viewWallet = UIView(frame: .zero)
     private var labelName = UILabel(frame: .zero)
     private var buttonSettings = UIButton(frame: .zero)
@@ -78,6 +67,19 @@ class WalletViewController: UIViewController {
     
     private var buttonAddTransaction = UIButton(frame: .zero)
     
+    private let presenter: WalletViewOutput
+    
+// MARK: - Init
+    init(presenter: WalletViewOutput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+// MARK: - LifeCircle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -87,7 +89,8 @@ class WalletViewController: UIViewController {
         presenter.viewWillAppear()
         setupGradient()
     }
-    
+
+// MARK: - setupUI
     private func setupUI() {
         view.backgroundColor = .gray
         setupViewWallet()
@@ -182,6 +185,7 @@ class WalletViewController: UIViewController {
         viewTransaction.addSubview(transactionCollectionView)
     }
     
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             viewWallet.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewWallet.topInset),
@@ -283,6 +287,7 @@ class WalletViewController: UIViewController {
     }
 }
 
+// MARK: - WalletViewInput
 extension WalletViewController: WalletViewInput {
     func reloadUI() {
         transactionCollectionView.reloadData()

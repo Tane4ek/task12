@@ -29,8 +29,16 @@ class TransactionHistoryViewController: UIViewController {
         }
     }
     
+    private var viewTransaction = UIView(frame: .zero)
+    private var labelTransaction = UILabel(frame: .zero)
+    private var buttonBackToWallet = UIButton(frame: .zero)
+    
+    private var transactionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+    
     private let presenter: TransactionHistoryViewOutput
     
+// MARK: - Init
     init(presenter: TransactionHistoryViewOutput) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -40,15 +48,7 @@ class TransactionHistoryViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var viewTransaction = UIView(frame: .zero)
-    private var labelTransaction = UILabel(frame: .zero)
-    private var buttonBackToWallet = UIButton(frame: .zero)
-    
-    private var transactionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    
-    
-    
+// MARK: - LifeCircle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -60,7 +60,8 @@ class TransactionHistoryViewController: UIViewController {
         setupGradient()
         
     }
-    
+
+// MARK: - setupUI
     private func setupUI() {
         view.backgroundColor = .gray
         setupViewTransaction()
@@ -104,7 +105,8 @@ class TransactionHistoryViewController: UIViewController {
         transactionCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(transactionCollectionView)
     }
-    
+
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             viewTransaction.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewTransaction.topInset),
@@ -145,6 +147,7 @@ class TransactionHistoryViewController: UIViewController {
     }
 }
 
+// MARK: - TransactionHistoryViewInput
 extension TransactionHistoryViewController: TransactionHistoryViewInput {
     func reloadUI() {
         transactionCollectionView.reloadData()

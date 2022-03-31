@@ -61,6 +61,4 @@ extension TransactionPresenter: TransactionViewOutput {
     func numberOfItems() -> Int {
         return 1
     }
-    
-    
 }

@@ -23,8 +23,17 @@ class WalletsListViewController: UIViewController {
         }
     }
     
-    private let presenter: WalletListViewOutput
+    private var viewWallet = UIView(frame: .zero)
+    private var labelWallet = UILabel(frame: .zero)
+    private var buttonAdd = UIButton(frame: .zero)
+    private  var labelNoWallet = UILabel(frame: .zero)
     
+    private var walletListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+    
+    private let presenter: WalletListViewOutput
+ 
+// MARK: - Init
     init(presenter: WalletListViewOutput) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -34,14 +43,7 @@ class WalletsListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var viewWallet = UIView(frame: .zero)
-    private var labelWallet = UILabel(frame: .zero)
-    private var buttonAdd = UIButton(frame: .zero)
-    private  var labelNoWallet = UILabel(frame: .zero)
-    
-    private var walletListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    
+// MARK: - LifeCircle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -49,7 +51,6 @@ class WalletsListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         setupGradient()
     }
     
@@ -61,7 +62,8 @@ class WalletsListViewController: UIViewController {
             labelNoWallet.isHidden = false
         }
     }
-    
+
+// MARK: - setupUI
     private func setupUI() {
         view.backgroundColor = .gray
         navigationController?.navigationBar.isHidden = true
@@ -115,7 +117,8 @@ class WalletsListViewController: UIViewController {
         walletListCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(walletListCollectionView)
     }
-    
+
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             viewWallet.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewWallet.topInset),
@@ -157,6 +160,7 @@ class WalletsListViewController: UIViewController {
     }
 }
 
+// MARK: - WalletListViewInput
 extension WalletsListViewController: WalletListViewInput {
     func reloadUI() {
         walletListCollectionView.reloadData()

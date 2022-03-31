@@ -36,12 +36,17 @@ class WalletCollectionViewCell: UICollectionViewCell {
     private var labelDateOfLastChange = UILabel(frame: .zero)
     private var dateOfLastChange = UILabel(frame: .zero)
     
+// MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupUICell()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+// MARK: - setupUI
     private func setupUICell() {
         setupContainerView()
         setupName()
@@ -99,7 +104,8 @@ class WalletCollectionViewCell: UICollectionViewCell {
         dateOfLastChange.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(dateOfLastChange)
     }
-    
+   
+// MARK: - Layout
     private func setupLayoutCell() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
@@ -136,7 +142,8 @@ class WalletCollectionViewCell: UICollectionViewCell {
         containerView.layer.insertSublayer(gradient, at: 0)
         containerView.clipsToBounds = true
     }
-    
+  
+// MARK: - Configure
     func configure (model: Wallet) {
         name.text = model.name
         balance.text = String(model.balance) + " " + model.codeCurrency
@@ -144,10 +151,6 @@ class WalletCollectionViewCell: UICollectionViewCell {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM dd, yyyy"
         dateOfLastChange.text = formatter.string(from: model.dateOfLastChange)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 

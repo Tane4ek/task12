@@ -49,7 +49,6 @@ extension AddWalletPresenter: AddWalletViewOutput {
         let result = walletServise?.updateWalletIfCan(wallet: wallet)
         if result == true {
             router?.returnToWalletModule()
-//            print(WalletServiceImpl().wallets())
         } else {
             router?.showAlertSameWallet()
         }

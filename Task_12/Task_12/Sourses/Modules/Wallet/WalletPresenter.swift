@@ -27,7 +27,6 @@ extension WalletPresenter: WalletViewOutput {
     }
     
     func viewWillAppear() {
-//        models = transactionService?.transactionsFromDataBase(walletID: wallet.id) ?? []
         models = transactionService?.transactions(walletID: wallet.id) ?? []
         wallet.balance = 0
         models.forEach({

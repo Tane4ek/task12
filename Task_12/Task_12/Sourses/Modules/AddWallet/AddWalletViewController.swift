@@ -34,17 +34,6 @@ class AddWalletViewController: UIViewController {
         case title
     }
     
-    private let presenter: AddWalletViewOutput
-    
-    init(presenter: AddWalletViewOutput) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private var viewWallet = UIView(frame: .zero)
     private var labelAddWallet = UILabel(frame: .zero)
     private var buttonBack = UIButton(frame: .zero)
@@ -54,6 +43,19 @@ class AddWalletViewController: UIViewController {
     private let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
     private let collectionViewHeaderReuseIdentifier = "HeaderCollectionReusableView"
     
+    private let presenter: AddWalletViewOutput
+    
+// MARK: - Init
+    init(presenter: AddWalletViewOutput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+// MARK: - LifeCircle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -70,7 +72,8 @@ class AddWalletViewController: UIViewController {
             buttonDelete.isHidden = true
         }
     }
-    
+   
+// MARK: - setupUI
     private func setupUI() {
         view.backgroundColor = .gray
         setupViewWallet()
@@ -127,6 +130,7 @@ class AddWalletViewController: UIViewController {
         addWalletCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             viewWallet.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.viewWallet.topInset),
@@ -175,15 +179,15 @@ class AddWalletViewController: UIViewController {
         viewWallet.layer.insertSublayer(gradient, at: 0)
         viewWallet.clipsToBounds = true
     }
-    
+   
+// MARK: - KeyboardNotification
     private func registerForKeyboardNotification() {
         self.registerForKeyboardWillShowNotification(self.addWalletCollectionView)
         self.registerForKeyboardWillHideNotification(self.addWalletCollectionView)
     }
-    
-    
 }
 
+// MARK: - AddWalletViewInput
 extension AddWalletViewController: AddWalletViewInput {
     func reloadUI() {
         addWalletCollectionView.reloadData()
@@ -235,7 +239,6 @@ extension AddWalletViewController: UICollectionViewDataSource {
     }
     
     @objc func saveButtonTapped(_ sender: UIButton) {
-        print("button Save tapped")
         presenter.buttonSaveTapped()
     }
     
@@ -295,18 +298,12 @@ extension AddWalletViewController {
     }
 }
 
-//extension UIScrollView {
-//    func setContentInsetAndScrollIndicatorInsets(_ edgeInsets: UIEdgeInsets) {
-//        self.contentInset = edgeInsets
-//        self.scrollIndicatorInsets = edgeInsets
-//    }
-//}
-
 //MARK: - textFieldDelegate
 extension AddWalletViewController: UITextFieldDelegate {
     
 }
 
+// MARK: - TextFieldButtonCollectionViewCellDelegate
 extension AddWalletViewController: TextFieldButtonCollectionViewCellDelegate {
     func getData(data: String) {
         

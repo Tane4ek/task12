@@ -18,14 +18,11 @@ class TransactionRouter {
     
     func showWalletModule() {
         view?.navigationController?.popViewController(animated: true)
-//        view?.dismiss(animated: true, completion: nil)
     }
     
     func showAddTransactionModule(currentWallet: Wallet, currentTransaction: Transaction?) {
         let configurator = AddTransactionModuleConfigurator(serviceContainer: serviceContainer)
         let addTransactionViewController = configurator.configure(currentWallet: currentWallet, currentTransaction: currentTransaction)
-//        addTransactionViewController.modalPresentationStyle = .fullScreen
-//        view?.present(addTransactionViewController, animated: true, completion: nil)
         view?.navigationController?.pushViewController(addTransactionViewController, animated: true)
     }
 }

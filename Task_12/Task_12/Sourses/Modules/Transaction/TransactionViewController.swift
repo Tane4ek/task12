@@ -45,17 +45,6 @@ class TransactionViewController: UIViewController {
         }
     }
     
-    private let presenter: TransactionViewOutput
-    
-    init(presenter: TransactionViewOutput) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private var viewTransaction = UIView(frame: .zero)
     private var labelData = UILabel(frame: .zero)
     private var buttonBackToWallet = UIButton(frame: .zero)
@@ -76,23 +65,31 @@ class TransactionViewController: UIViewController {
         return scroll
     }()
     
+    private let presenter: TransactionViewOutput
+    
+// MARK: - Init
+    init(presenter: TransactionViewOutput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+// MARK: - LifeCircle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setupGradient()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         presenter.viewWillAppear()
     }
     
+// MARK: - setupUI
     private func setupUI() {
-//        view.backgroundColor = UIColor(named: presenter.currentModel().colorName)
         setupViewTransaction()
         setupLabelDate()
         setupButtonBackToWallet()
@@ -196,7 +193,8 @@ class TransactionViewController: UIViewController {
         labelNoteText.translatesAutoresizingMaskIntoConstraints = false
         viewNote.addSubview(labelNoteText)
     }
-    
+  
+// MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             viewTransaction.topAnchor.constraint(equalTo: view.topAnchor, constant: Paddings.ViewTransaction.topInset),
@@ -223,11 +221,9 @@ class TransactionViewController: UIViewController {
             
             buttonEdit.topAnchor.constraint(equalTo: viewCurrentTransaction.topAnchor, constant: Paddings.SubViews.verticalInset),
             buttonEdit.trailingAnchor.constraint(equalTo: viewCurrentTransaction.trailingAnchor, constant: -Paddings.SubViews.horizontalInset),
-            //            buttonEdit.leadingAnchor.constraint(equalTo: labelName.trailingAnchor, constant: Paddings.SubViews.horizontalInset),
 
             labelName.topAnchor.constraint(equalTo: viewCurrentTransaction.topAnchor, constant: Paddings.SubViews.verticalInset),
             labelName.leadingAnchor.constraint(equalTo: viewCurrentTransaction.leadingAnchor, constant: Paddings.SubViews.horizontalInset),
-            //            labelName.trailingAnchor.constraint(equalTo: viewCurrentTransaction.trailingAnchor, constant: -Paddings.SubViews.horizontalInset),
 
             labelBalance.topAnchor.constraint(equalTo: labelName.bottomAnchor, constant: Paddings.SubViews.verticalInset),
             labelBalance.leadingAnchor.constraint(equalTo: viewCurrentTransaction.leadingAnchor, constant: Paddings.SubViews.horizontalInset),
@@ -252,19 +248,6 @@ class TransactionViewController: UIViewController {
         ])
     }
     
-    private func setupGradient() {
-        //        let gradient: CAGradientLayer = CAGradientLayer()
-        //        let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
-        //        let leftColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.15)
-        //        gradient.colors = [leftColor!.cgColor, rightColor!.cgColor]
-        //        gradient.locations = [0.0 , 1.0]
-        //        gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
-        //        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
-        //        gradient.frame = CGRect(x: 0.0, y: 0.0, width: viewTransaction.frame.size.width, height: viewTransaction.frame.size.height)
-        //        viewTransaction.layer.insertSublayer(gradient, at: 0)
-        //        viewTransaction.clipsToBounds = true
-    }
-    
     @objc private func buttonBackToWalletTapped(_ sender: UIButton) {
         presenter.buttonBackTapped()
     }
@@ -280,6 +263,7 @@ class TransactionViewController: UIViewController {
     
 }
 
+// MARK: - TransactionViewInput
 extension TransactionViewController: TransactionViewInput {
     
     func reloadUI() {
@@ -298,6 +282,7 @@ extension TransactionViewController: TransactionViewInput {
     }
 }
 
+// MARK: - UIScrollViewDelegate
 extension TransactionViewController: UIScrollViewDelegate {
     
 }

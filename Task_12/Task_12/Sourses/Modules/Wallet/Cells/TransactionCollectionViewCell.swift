@@ -43,13 +43,19 @@ class TransactionCollectionViewCell: UICollectionViewCell {
     private var balance = UILabel(frame: .zero)
     private var dateOfLastChange = UILabel(frame: .zero)
     private var chevron = UIImageView(frame: .zero)
-    
+   
+// MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupUICell()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+ 
+// MARK: - setupUI
     private func setupUICell() {
         setupContainerView()
         setupMainView()
@@ -105,13 +111,12 @@ class TransactionCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(chevron)
     }
     
+// MARK: - Layout
     private func setupLayoutCell() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-//                                                   , constant: Paddings.horizontalInset),
             containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-//                                                    , constant: -Paddings.horizontalInset),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             mainView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
@@ -135,6 +140,7 @@ class TransactionCollectionViewCell: UICollectionViewCell {
             chevron.leadingAnchor.constraint(equalTo: balance.trailingAnchor, constant: Paddings.Chevron.leftInset)
         ])
     }
+    
     private func setupGradient() {
         let gradient: CAGradientLayer = CAGradientLayer()
         let rightColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
@@ -148,6 +154,7 @@ class TransactionCollectionViewCell: UICollectionViewCell {
         containerView.clipsToBounds = true
     }
     
+// MARK: - Configure
     func configure (model: Transaction) {
         name.text = model.title
         balance.text = String(model.change) + " " + model.codeCurrency
@@ -160,9 +167,4 @@ class TransactionCollectionViewCell: UICollectionViewCell {
         formatter.dateFormat = "dd MMM"
         dateOfLastChange.text = formatter.string(from: model.date)
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 }

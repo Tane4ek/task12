@@ -272,6 +272,7 @@ extension AddTransactionViewController {
     }
 }
 
+// MARK: - TextInputCollectionViewCellDelegate
 extension AddTransactionViewController: TextInputCollectionViewCellDelegate {
     func dataTransfer(index: Int) {
         if index == AddTransactionSection.title.rawValue {

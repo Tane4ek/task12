@@ -19,14 +19,11 @@ class TransactionHistoryRouter {
     func showTransactionModule(wallet: Wallet, model: Transaction) {
         let configurator = TransactionModuleConfigurator(serviceContainer: serviceContainer)
         let transactionViewController = configurator.configure(wallet: wallet, model: model)
-//        addWalletViewController.modalPresentationStyle = .fullScreen
-//        view?.present(addWalletViewController, animated: true, completion: nil)
         view?.navigationController?.pushViewController(transactionViewController, animated: true)
     }
     
     func showWalletModule() {
         view?.navigationController?.popViewController(animated: true)
-//        view?.dismiss(animated: true, completion: nil)
     }
     
 }

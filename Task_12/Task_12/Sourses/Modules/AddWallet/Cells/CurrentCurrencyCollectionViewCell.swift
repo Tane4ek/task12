@@ -33,12 +33,18 @@ class CurrentCurrencyCollectionViewCell: UICollectionViewCell {
     var delegate: TextFieldButtonCollectionViewCellDelegate?
     var index: Int?
     
+// MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupUICell()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+// MARK: - setupUI
     private func setupUICell() {
         setupContainerView()
         setupLabelContinerView()
@@ -80,6 +86,7 @@ class CurrentCurrencyCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(chevron)
     }
     
+ // MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
@@ -99,16 +106,9 @@ class CurrentCurrencyCollectionViewCell: UICollectionViewCell {
             chevron.centerYAnchor.constraint(equalTo: labelContinerView.centerYAnchor),
         ])
     }
-    
+ 
+// MARK: - Configure
     func configure (model: Wallet) {
         labelCurrency.text = model.codeCurrency
-        
-        print("валюта из кошелька", labelCurrency.text)
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
 }

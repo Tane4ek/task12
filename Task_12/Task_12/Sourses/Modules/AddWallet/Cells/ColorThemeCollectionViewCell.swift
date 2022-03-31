@@ -36,12 +36,17 @@ class ColorThemeCollectionViewCell: UICollectionViewCell {
     private var colorView = UIImageView(frame: .zero)
     private var chevron = UIImageView(frame: .zero)
     
+ // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupUICell()
     }
-    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+// MARK: - setupUI
     private func setupUICell() {
         setupContainerView()
         setupimageContinerView()
@@ -55,7 +60,6 @@ class ColorThemeCollectionViewCell: UICollectionViewCell {
         containerView.layer.borderWidth = 1.5
         containerView.layer.borderColor = UIColor.white.cgColor
         containerView.backgroundColor = UIColor(named: "Baby Powder")?.withAlphaComponent(0.55)
-//        containerView.alpha = 0.55
         containerView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(containerView)
     }
@@ -81,6 +85,7 @@ class ColorThemeCollectionViewCell: UICollectionViewCell {
         imageContinerView.addSubview(chevron)
     }
     
+ // MARK: - Layout
     private func setupLayout() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Paddings.horizontalInset),
@@ -103,11 +108,9 @@ class ColorThemeCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    
+// MARK: - Configure
     func configure(model: Wallet) {
         colorView.backgroundColor = UIColor(named: model.colorName)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
